@@ -1,37 +1,37 @@
 /**
  * Vercel Serverless Function — /api/chat
  *
- * Acts as a secure proxy between the browser and the Anthropic API.
- * The ANTHROPIC_API_KEY env variable is set in Vercel dashboard
- * and is NEVER exposed to the browser.
+ * Secure proxy: browser never sees your Gemini API key.
+ * Set GEMINI_API_KEY in your Vercel project environment variables.
+ *
+ * FREE tier: 15 req/min · 1,500 req/day · No credit card needed
+ * Get your key → https://aistudio.google.com/app/apikey
  */
 
 export default async function handler(req, res) {
-  // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY
+  const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) {
-    return res.status(500).json({ error: 'API key not configured on server.' })
+    return res.status(500).json({ error: 'GEMINI_API_KEY not set on server.' })
   }
 
+  const model    = 'gemini-1.5-flash'
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`
+
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type':      'application/json',
-        'x-api-key':         apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify(req.body),
+    const upstream = await fetch(endpoint, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(req.body),
     })
 
-    const data = await response.json()
+    const data = await upstream.json()
 
-    if (!response.ok) {
-      return res.status(response.status).json(data)
+    if (!upstream.ok) {
+      return res.status(upstream.status).json(data)
     }
 
     return res.status(200).json(data)

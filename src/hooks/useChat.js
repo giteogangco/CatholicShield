@@ -23,6 +23,14 @@ Keep responses practical — this is for a regular Catholic in a real conversati
 Be concise but complete. Use a confident, warm, pastoral tone.
 ALL TEXT MUST BE IN ${language.name}.`
 
+// Convert our {role, content} message history to Gemini's format
+function toGeminiMessages(messages) {
+  return messages.map(m => ({
+    role: m.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: m.content }],
+  }))
+}
+
 export function useChat(lang) {
   const [messages, setMessages] = useState([])
   const [loading, setLoading]   = useState(false)
@@ -34,35 +42,42 @@ export function useChat(lang) {
     setLoading(true)
 
     try {
-      // Uses the Vercel API proxy route (/api/chat) in production,
-      // or hits the Anthropic API directly in local dev via the proxy in vite.config.js
+      // In production  → Vercel serverless proxy keeps key secret
+      // In development → Vite proxy forwards to Gemini (key stays server-side)
       const endpoint = import.meta.env.PROD
         ? '/api/chat'
-        : '/anthropic/v1/messages'
+        : '/gemini-proxy/v1beta/models/gemini-1.5-flash:generateContent'
 
       const headers = { 'Content-Type': 'application/json' }
-      // In local dev, attach the key directly (proxied by Vite, never exposed to browser)
+      // Vite dev proxy appends the key as a query param server-side; nothing leaks
       if (!import.meta.env.PROD) {
-        headers['x-api-key'] = import.meta.env.VITE_ANTHROPIC_API_KEY
-        headers['anthropic-version'] = '2023-06-01'
-        headers['anthropic-dangerous-direct-browser-access'] = 'true'
+        headers['x-gemini-key'] = import.meta.env.VITE_GEMINI_API_KEY
       }
 
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1200,
-          system: buildSystemPrompt(lang),
-          messages: newMsgs,
-        }),
-      })
-      const data  = await res.json()
-      const reply = data.content?.find(b => b.type === 'text')?.text
-        || 'Error generating response. Please try again.'
+      // Gemini request body
+      const body = {
+        system_instruction: {
+          parts: [{ text: buildSystemPrompt(lang) }],
+        },
+        contents: toGeminiMessages(newMsgs),
+        generationConfig: {
+          maxOutputTokens: 1200,
+          temperature: 0.7,
+        },
+      }
+
+      const res  = await fetch(endpoint, { method: 'POST', headers, body: JSON.stringify(body) })
+      const data = await res.json()
+
+      // Gemini response shape: data.candidates[0].content.parts[0].text
+      const reply =
+        data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+        data?.error?.message ||
+        'Error generating response. Please try again.'
+
       setMessages([...newMsgs, { role: 'assistant', content: reply }])
-    } catch {
+    } catch (err) {
+      console.error(err)
       setMessages([...newMsgs, {
         role: 'assistant',
         content: 'Connection error. Please check your internet and try again.',

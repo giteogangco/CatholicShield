@@ -2,99 +2,97 @@
 
 A multilingual Catholic apologetics app that helps ordinary Catholics defend their faith using Scripture, Sacred Tradition, and the Magisterium.
 
-**Supports 8 Philippine languages** (Filipino, Cebuano, Ilocano, Ilonggo, Waray-Waray, Bikol, Kapampangan, Tausug) plus 10 international languages.
+**🆓 100% FREE to run** — powered by Google Gemini's free API (no credit card needed).  
+**🇵🇭 Supports 8 Philippine languages** plus 10 international languages.
 
 ---
 
-## 📸 Features
+## ✨ Features
 
 - 🌍 **Multilingual** — Full responses in your chosen language
 - 📖 **Scripture-based** — Every answer backed by Bible verses
 - 📜 **Tradition & History** — Early Church Fathers, Councils, Saints
-- ⚡ **Quick Attacks** — Tap common challenges to get instant responses
-- 💬 **Chat freely** — Type anything someone said to you
+- ⚡ **Quick Attacks** — Tap common challenges for instant responses
+- 💬 **Free chat** — Type anything someone said to you
 - 🇵🇭 **Philippine languages first** — Built for Filipino Catholics
 
 ---
 
-## 🚀 Quick Start (Local Development)
+## 🔑 Step 1 — Get Your FREE Gemini API Key
 
-### 1. Clone the repo
+1. Go to **[aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)**
+2. Sign in with your Google account
+3. Click **"Create API Key"**
+4. Copy the key — that's it! ✅
+
+> **Free limits:** 15 requests/minute · 1,500 requests/day · No credit card ever needed.
+
+---
+
+## 💻 Step 2 — Run Locally
+
 ```bash
+# 1. Clone your repo
 git clone https://github.com/YOUR_USERNAME/catholic-shield.git
 cd catholic-shield
-```
 
-### 2. Install dependencies
-```bash
+# 2. Install dependencies
 npm install
-```
 
-### 3. Set up your API key
+# 3. Create your .env file
+cp .env.example .env
+# Open .env and paste your Gemini key
 
-Create a `.env` file in the root folder:
-```
-VITE_ANTHROPIC_API_KEY=your_api_key_here
-```
-
-> ⚠️ **Important:** Get your API key from [console.anthropic.com](https://console.anthropic.com).
-> Never commit your `.env` file. It is already in `.gitignore`.
-
-### 4. Run locally
-```bash
+# 4. Start the app
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Open **[http://localhost:5173](http://localhost:5173)** in your browser. 🎉
 
 ---
 
-## ☁️ Deploy to Vercel (Free — Recommended)
+## ☁️ Step 3 — Deploy FREE on Vercel
 
-### Option A: Deploy via Vercel website (easiest)
+### Via Vercel website (easiest — no command line needed)
 
 1. Push your code to GitHub (see below)
-2. Go to [vercel.com](https://vercel.com) and sign in with GitHub
-3. Click **"Add New Project"**
-4. Import your `catholic-shield` repository
-5. Under **"Environment Variables"**, add:
-   - Key: `VITE_ANTHROPIC_API_KEY`
-   - Value: your Anthropic API key
-6. Click **"Deploy"**
+2. Go to **[vercel.com](https://vercel.com)** → Sign in with GitHub
+3. Click **"Add New Project"** → Import your `catholic-shield` repo
+4. Under **"Environment Variables"**, add:
+   | Name | Value |
+   |------|-------|
+   | `GEMINI_API_KEY` | your Gemini key |
+5. Click **"Deploy"** 🚀
 
-Done! Your app will be live at `https://catholic-shield.vercel.app` (or similar).
+Your app will be live at `https://catholic-shield.vercel.app` (or similar) — **free forever**.
 
-### Option B: Deploy via Vercel CLI
+### Via Vercel CLI
 ```bash
 npm install -g vercel
 vercel
+# Follow the prompts, add GEMINI_API_KEY when asked
 ```
 
 ---
 
-## ☁️ Deploy to Netlify (Free — Alternative)
+## ☁️ Deploy FREE on Netlify (Alternative)
 
-1. Push your code to GitHub
-2. Go to [netlify.com](https://netlify.com) and sign in
-3. Click **"Add new site" → "Import an existing project"**
-4. Connect GitHub and select your repo
-5. Set build settings:
+1. Go to **[netlify.com](https://netlify.com)** → Sign in
+2. **"Add new site"** → **"Import an existing project"** → Connect GitHub
+3. Build settings:
    - **Build command:** `npm run build`
    - **Publish directory:** `dist`
-6. Under **"Environment variables"**, add:
-   - Key: `VITE_ANTHROPIC_API_KEY`
-   - Value: your Anthropic API key
-7. Click **"Deploy site"**
+4. **"Environment variables"** → Add `GEMINI_API_KEY`
+5. **"Deploy site"** 🚀
 
 ---
 
 ## 📤 Push to GitHub
 
 ```bash
-# Initialize git (if not already done)
 git init
 git add .
-git commit -m "Initial commit — Catholic Shield app"
+git commit -m "Initial commit — Catholic Shield"
 
 # Create a new repo on github.com first, then:
 git remote add origin https://github.com/YOUR_USERNAME/catholic-shield.git
@@ -108,48 +106,62 @@ git push -u origin main
 
 ```
 catholic-shield/
+├── api/
+│   └── chat.js                  ← Vercel serverless proxy (keeps API key secret)
 ├── public/
-│   └── cross.svg               # Favicon
+│   └── cross.svg                ← Favicon
 ├── src/
 │   ├── components/
-│   │   ├── ChatScreen.jsx      # Chat/conversation screen
-│   │   ├── HomeScreen.jsx      # Main home screen
-│   │   ├── LangPill.jsx        # Language switcher button
-│   │   ├── LanguageScreen.jsx  # Language selection screen
-│   │   └── MessageBubble.jsx   # Individual chat message
+│   │   ├── ChatScreen.jsx       ← Chat/conversation screen
+│   │   ├── HomeScreen.jsx       ← Main home screen
+│   │   ├── LangPill.jsx         ← Language switcher button
+│   │   ├── LanguageScreen.jsx   ← Language selection screen
+│   │   └── MessageBubble.jsx    ← Individual chat message
 │   ├── data/
-│   │   ├── languages.js        # All supported languages
-│   │   ├── topics.js           # Categories & quick topics
-│   │   └── uiStrings.js        # Localized UI text
+│   │   ├── languages.js         ← All 18 languages
+│   │   ├── topics.js            ← Categories & quick topics
+│   │   └── uiStrings.js         ← Localized UI text
 │   ├── hooks/
-│   │   └── useChat.js          # AI chat logic + API calls
-│   ├── App.css                 # App layout styles
-│   ├── App.jsx                 # Root component / screen router
-│   ├── index.css               # Global styles & shared classes
-│   └── main.jsx                # React entry point
-├── .gitignore
+│   │   └── useChat.js           ← Gemini API chat logic
+│   ├── App.css / App.jsx        ← Root + screen routing
+│   ├── index.css                ← Global styles
+│   └── main.jsx                 ← React entry point
+├── .env.example                 ← Copy this to .env
+├── .gitignore                   ← Excludes .env, node_modules, dist
 ├── index.html
 ├── package.json
-├── README.md
-└── vite.config.js
+├── vercel.json                  ← Vercel config
+└── vite.config.js               ← Dev proxy config
 ```
 
 ---
 
-## 🔑 API Key Setup Notes
+## 🆓 Why It's Free
 
-This app calls the Anthropic Claude API directly from the browser. For a **personal or community app**, this is fine. For a **public app**, consider:
+| Service | Free Tier |
+|---------|-----------|
+| **Google Gemini API** | 1,500 requests/day, no credit card |
+| **Vercel Hosting** | Free for personal projects |
+| **GitHub** | Free for public repos |
 
-1. **Setting usage limits** in your Anthropic console
-2. **Adding a backend proxy** (e.g. a Vercel API route) so your key is never exposed
-3. Monitoring your usage at [console.anthropic.com](https://console.anthropic.com)
+**Total monthly cost: $0** ✅
+
+---
+
+## 🔒 Security Notes
+
+- Your API key is **never** exposed to the browser
+- In local dev: Vite proxy injects the key server-side
+- In production: Vercel serverless function keeps key in environment variables
+- `.env` is in `.gitignore` so it's never committed to GitHub
 
 ---
 
 ## ✝️ Built with
 
 - [React](https://react.dev) + [Vite](https://vitejs.dev)
-- [Claude API](https://www.anthropic.com) (claude-sonnet-4)
+- [Google Gemini API](https://aistudio.google.com) (gemini-1.5-flash — free)
+- [Vercel](https://vercel.com) (free hosting)
 - [Google Fonts](https://fonts.google.com) — Cinzel + Crimson Pro
 
 ---
