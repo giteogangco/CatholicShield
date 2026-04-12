@@ -8,7 +8,7 @@
  * Get your key → https://aistudio.google.com/app/apikey
  */
 
-const MODEL = 'gemini-1.5-flash'
+const MODEL = 'gemini-1.5-flash-latest'
 const BASE_URL = 'https://generativelanguage.googleapis.com/v1/models'
 
 // Sleep helper
