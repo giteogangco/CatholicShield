@@ -1,0 +1,80 @@
+import { useState } from 'react'
+import { CATEGORIES, QUICK_TOPICS } from '../data/topics'
+import { getUI } from '../data/uiStrings'
+import LangPill from './LangPill'
+
+export default function HomeScreen({ lang, onSelectLang, onStartCategory, onStartTopic, onAskOwn }) {
+  const [input, setInput] = useState('')
+  const ui = getUI(lang.code)
+
+  const handleSend = () => {
+    if (!input.trim()) return
+    onAskOwn(input.trim())
+    setInput('')
+  }
+
+  const handleKey = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSend()
+    }
+  }
+
+  return (
+    <div className="screen">
+      {/* Header */}
+      <div className="home-header">
+        <div className="header-row">
+          <div className="header-spacer" />
+          <div className="header-center">
+            <span className="cross-icon">✝</span>
+            <h1 className="app-title">Catholic Shield</h1>
+            <p className="app-subtitle">{ui.subtitle}</p>
+          </div>
+          <LangPill lang={lang} onClick={onSelectLang} />
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="scroll-area">
+        {/* Categories */}
+        <p className="section-label">{ui.choose}</p>
+        <div className="category-grid">
+          {CATEGORIES.map(cat => (
+            <button key={cat.id} className="cat-btn" onClick={() => onStartCategory(cat)}>
+              <span className="cat-icon">{cat.icon}</span>
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Quick chips */}
+        <p className="section-label" style={{ marginTop: 18 }}>{ui.attacks}</p>
+        <div className="chips-wrap">
+          {QUICK_TOPICS.map(t => (
+            <button key={t} className="quick-chip" onClick={() => onStartTopic(t)}>{t}</button>
+          ))}
+        </div>
+
+        {/* Custom question */}
+        <div className="ask-box">
+          <p className="ask-label">{ui.askOwn}</p>
+          <div className="input-row">
+            <textarea
+              className="text-input"
+              placeholder={ui.placeholder}
+              value={input}
+              rows={2}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={handleKey}
+            />
+            <button className="send-btn" disabled={!input.trim()} onClick={handleSend}>➤</button>
+          </div>
+        </div>
+
+        {/* Bible verse */}
+        <p className="footer-verse">{ui.verse}</p>
+      </div>
+    </div>
+  )
+}
