@@ -1,4 +1,4 @@
-—import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { findOfflineAnswer } from '../data/offlineAnswers'
 
 // ── Network status hook ───────────────────────────────────────
