@@ -1,0 +1,305 @@
+/**
+ * offlineAnswers.js
+ * Pre-written apologetics answers for offline mode.
+ * Each entry has: id, keywords (for matching), en (English), fil (Filipino)
+ *
+ * Structure per answer:
+ *   challenge  — restate the attack
+ *   answer     — direct Catholic response
+ *   scripture  — Bible verses
+ *   tradition  — Early Church / Councils / Saints
+ *   respond    — How to reply charitably
+ */
+
+export const OFFLINE_ANSWERS = [
+
+  // ── MARY & SAINTS ──────────────────────────────────────────────────
+
+  {
+    id: 'mary-worship',
+    keywords: ['worship mary', 'mary worship', 'idolize mary', 'idol mary', 'sambahin si maria', 'sinasamba si maria', 'nagdarasal kay maria'],
+    en: {
+      challenge: 'Catholics worship Mary as a goddess.',
+      answer: 'Catholics do NOT worship Mary. We honor and venerate her as the Mother of Jesus, but worship (latria) belongs to God alone. Asking Mary to pray for us is no different from asking a friend to pray — except Mary is in heaven, closer to God than anyone.',
+      scripture: 'Luke 1:28 — The angel called Mary "full of grace." Luke 1:48 — "All generations will call me blessed." These are honor, not worship.',
+      tradition: 'St. Augustine (400 AD): "It is one thing to honor, another to worship." The Council of Ephesus (431 AD) declared Mary Theotokos (Mother of God) — a title of honor, not divinity.',
+      respond: 'Gently ask: "Can you ask a friend to pray for you? We simply ask Mary to do the same — she is alive in heaven and can intercede for us."',
+    },
+    fil: {
+      challenge: 'Sinasamba ng mga Katoliko si Maria bilang diyosa.',
+      answer: 'Hindi sinasamba ng mga Katoliko si Maria. Ginagalang namin siya bilang Ina ni Hesus, ngunit ang pagsamba (latria) ay para sa Diyos lamang. Ang paghingi ng dasal kay Maria ay katulad ng paghingi ng dasal sa isang kaibigan — maliban na si Maria ay nasa langit na, mas malapit sa Diyos.',
+      scripture: 'Lucas 1:28 — Tinawag ng anghel si Maria na "puno ng grasya." Lucas 1:48 — "Lahat ng henerasyon ay magtatawag sa akin na pinagpala." Ito ay paggalang, hindi pagsamba.',
+      tradition: 'Sinabi ni St. Agustin (400 AD): "Iba ang paggalang, iba ang pagsamba." Idineklara ng Konsilyo ng Efeso (431 AD) si Maria bilang Theotokos (Ina ng Diyos) — pamagat ng karangalan, hindi pagka-diyos.',
+      respond: 'Mahinahon na tanungin: "Maaari ka bang humingi ng panalangin sa isang kaibigan? Ganoon din ang ginagawa namin kay Maria — buhay siya sa langit at maaaring mamagitan para sa atin."',
+    },
+  },
+
+  {
+    id: 'saints-intercession',
+    keywords: ['praying to saints', 'saints dead', 'saints intercession', 'magdarasal sa mga santo', 'patay na ang mga santo', 'saint mediator'],
+    en: {
+      challenge: 'Praying to saints is wrong — they are dead and only Jesus is the mediator.',
+      answer: 'Saints are NOT dead — Jesus said "God is not the God of the dead, but of the living" (Matt 22:32). They are alive in heaven. Jesus is the ONE mediator between God and man (1 Tim 2:5), but that does not forbid us from asking others to pray on our behalf — which is intercession, not mediation.',
+      scripture: 'Rev 5:8 — The elders in heaven offer "golden bowls full of incense, which are the prayers of the saints." James 5:16 — "The prayer of a righteous person is powerful and effective."',
+      tradition: 'St. Cyril of Jerusalem (350 AD): "We then commemorate those who have fallen asleep... that God may receive our prayer, strengthened by the prayers of the saints."',
+      respond: 'Ask: "Do you ask others to pray for you? That is all we do with saints — they are alive in heaven and their prayers are powerful before God."',
+    },
+    fil: {
+      challenge: 'Mali ang magdasal sa mga santo — patay na sila at si Hesus lamang ang tagapamagitan.',
+      answer: 'Hindi patay ang mga santo — sinabi ni Hesus na "ang Diyos ay hindi Diyos ng mga patay, kundi ng mga buhay" (Mat 22:32). Buhay sila sa langit. Si Hesus ang IISANG tagapamagitan (1 Tim 2:5), ngunit hindi ito nagbabawal sa atin na humingi sa iba na manalangin para sa atin — ito ay pamamagitan, hindi paghahari.',
+      scripture: 'Apoc 5:8 — Ang mga matatanda sa langit ay nag-aalok ng "gintong mangkok puno ng insenso, na mga panalangin ng mga banal." Santiago 5:16 — "Ang panalangin ng isang taong matuwid ay makapangyarihan."',
+      tradition: 'Sinabi ni St. Cirilo ng Jerusalem (350 AD): "Naaalala natin ang mga natutulog na... upang tanggapin ng Diyos ang ating panalangin, pinalakasi ng mga panalangin ng mga banal."',
+      respond: 'Tanungin: "Humihingi ka ba sa iba na manalangin para sa iyo? Iyon lang ang ginagawa namin sa mga santo — buhay sila sa langit at makapangyarihan ang kanilang panalangin sa harap ng Diyos."',
+    },
+  },
+
+  // ── PURGATORY ──────────────────────────────────────────────────────
+
+  {
+    id: 'purgatory-bible',
+    keywords: ['purgatory', 'purgatory bible', 'purgatorio', 'purgatoryo', 'not in bible', 'wala sa biblia', 'purgatory not biblical'],
+    en: {
+      challenge: 'Purgatory is not in the Bible — Catholics invented it.',
+      answer: 'Purgatory IS supported by Scripture. The word may not appear, but neither does "Trinity" — yet both are biblical. Purgatory is the state of purification for those who die in God\'s grace but still imperfectly. God is perfectly holy; nothing impure enters heaven (Rev 21:27).',
+      scripture: '2 Macc 12:46 — "It is holy and wholesome to pray for the dead, that they may be loosed from their sins." Matt 12:32 — Jesus speaks of sins forgiven "in the age to come" — implying a state after death. 1 Cor 3:15 — Saved "as through fire."',
+      tradition: 'Tertullian (200 AD) and St. Augustine both wrote about praying for the dead. The Council of Florence (1439) and Council of Trent (1563) formally defined purgatory based on Scripture and Tradition.',
+      respond: 'Ask: "Do you believe God\'s justice is perfect? If someone dies repentant but not yet perfectly holy, where do they go? Purgatory is God\'s mercy — a final cleansing before heaven."',
+    },
+    fil: {
+      challenge: 'Wala sa Biblia ang purgatoryo — imbento ito ng mga Katoliko.',
+      answer: 'Ang purgatoryo ay SUPORTADO ng Kasulatan. Ang salitang maaaring hindi lumabas, ngunit hindi rin lumabas ang "Trinidad" — gayunpaman pareho itong biblikal. Ang purgatoryo ay estado ng paglilinis para sa mga namatay sa grasya ng Diyos ngunit hindi pa perpekto. Ang Diyos ay ganap na banal; walang maruming pumapasok sa langit (Apoc 21:27).',
+      scripture: '2 Maccabeo 12:46 — "Banal at kapaki-pakinabang ang manalangin para sa mga patay, upang mapalaya sila mula sa kanilang mga kasalanan." Mat 12:32 — Nagsalita si Hesus ng kasalanang pinapatawad "sa susunod na panahon." 1 Cor 3:15 — Naligtas "na parang sa pamamagitan ng apoy."',
+      tradition: 'Sina Tertullian (200 AD) at St. Agustin ay kapwa nagsulat tungkol sa pagdarasal para sa mga patay. Ang Konsilyo ng Florence (1439) at Konsilyo ng Trent (1563) ay pormalmente tinukoy ang purgatoryo.',
+      respond: 'Tanungin: "Naniniwala ka ba na ang katarungan ng Diyos ay perpekto? Kung ang isang tao ay namatay na nagsisisi ngunit hindi pa ganap na banal, saan sila pupunta? Ang purgatoryo ay awa ng Diyos — isang huling paglilinis bago ang langit."',
+    },
+  },
+
+  // ── POPE & AUTHORITY ───────────────────────────────────────────────
+
+  {
+    id: 'pope-infallibility',
+    keywords: ['pope infallible', 'pope not infallible', 'papal infallibility', 'papa infallible', 'hindi infallible ang papa', 'pope authority'],
+    en: {
+      challenge: 'The Pope is not infallible — he is just a man who makes mistakes.',
+      answer: 'Papal infallibility is very specific and limited. It only applies when the Pope speaks "ex cathedra" (from the chair) on matters of faith and morals, to be held by the whole Church. This has only been used twice formally (1854 and 1950). It does not mean the Pope is sinless or cannot make personal mistakes.',
+      scripture: 'Matt 16:18-19 — Jesus said to Peter: "You are Rock, and on this rock I will build my Church... I will give you the keys of the kingdom." Luke 22:32 — "I have prayed for you that your faith may not fail... strengthen your brothers."',
+      tradition: 'St. Irenaeus (180 AD): "It is a matter of necessity that every Church should agree with [the Church of Rome]." Vatican I (1870) formally defined papal infallibility with very specific limits.',
+      respond: 'Clarify: "Infallibility doesn\'t mean the Pope never sins. It means the Holy Spirit protects the Church from teaching error on faith and morals — just as Jesus promised the gates of hell would not prevail."',
+    },
+    fil: {
+      challenge: 'Hindi infallible ang Papa — siya ay isang tao lamang na nagkakamali.',
+      answer: 'Ang infallibility ng Papa ay napaka-tiyak at limitado. Naaangkop lamang ito kapag nagsasalita ang Papa ng "ex cathedra" (mula sa upuan) sa mga bagay ng pananampalataya at moralidad, para sa buong Simbahan. Ginagamit lamang ito nang dalawang beses (1854 at 1950). Hindi ito nangangahulugang walang kasalanan ang Papa.',
+      scripture: 'Mat 16:18-19 — Sinabi ni Hesus kay Pedro: "Ikaw ay Bato, at sa batong ito itatayo ko ang aking Simbahan... ibibigay ko sa iyo ang mga susi ng kaharian." Lucas 22:32 — "Nanalangin ako para sa iyo upang hindi mabigo ang iyong pananampalataya... palakasin mo ang iyong mga kapatid."',
+      tradition: 'Sinabi ni St. Irenaeus (180 AD): "Kinakailangan na sumang-ayon ang bawat Simbahan sa [Simbahan ng Roma]." Vatican I (1870) ay pormalmente tinukoy ang papal infallibility na may napaka-tiyak na mga limitasyon.',
+      respond: 'Linawin: "Ang infallibility ay hindi nangangahulugang hindi nagkakasala ang Papa. Ibig sabihin nito na pinoprotektahan ng Banal na Espiritu ang Simbahan mula sa pagtuturo ng kamalian sa pananampalataya at moralidad — tulad ng ipinangako ni Hesus."',
+    },
+  },
+
+  // ── SACRAMENTS ─────────────────────────────────────────────────────
+
+  {
+    id: 'confession-priest',
+    keywords: ['confession priest', 'confess priest', 'why confess priest', 'confess to god', 'confession unbiblical', 'kumpisal sa pari', 'kumpisal'],
+    en: {
+      challenge: 'Confession to a priest is unbiblical — I confess directly to God.',
+      answer: 'You can always confess directly to God for forgiveness, and Catholics do this too. But the Sacrament of Confession is a gift — Jesus gave the Apostles the power to forgive sins in His name. Confession is not the priest forgiving you in his own power; he acts as Christ\'s instrument.',
+      scripture: 'John 20:21-23 — Jesus breathed on the disciples and said: "Receive the Holy Spirit. If you forgive anyone\'s sins, their sins are forgiven; if you retain them, they are retained." James 5:16 — "Confess your sins to each other."',
+      tradition: 'St. Cyprian (250 AD): "Sins are not remitted except through the priests." The Didache (100 AD), the earliest Christian manual, already mentions confession before the Eucharist.',
+      respond: 'Ask: "If Jesus gave his Apostles the power to forgive sins (John 20:23), why would He give that power if no one was supposed to use it? The priest is simply acting in the person of Christ."',
+    },
+    fil: {
+      challenge: 'Ang kumpisal sa pari ay hindi biblikal — nagkukumpisal ako nang direkta sa Diyos.',
+      answer: 'Maaari kang kumpisal nang direkta sa Diyos para sa kapatawaran, at ginagawa rin ito ng mga Katoliko. Ngunit ang Sakramento ng Kumpisal ay isang regalo — ibinigay ni Hesus sa mga Apostol ang kapangyarihang magpatawad ng mga kasalanan sa Kanyang pangalan. Ang kumpisal ay hindi ang pari na nagpapatawad sa kanyang sariling kapangyarihan; siya ay kumikilos bilang instrumento ni Kristo.',
+      scripture: 'Juan 20:21-23 — Hiningahan ni Hesus ang mga alagad at sinabi: "Tanggapin ninyo ang Banal na Espiritu. Kung kaninong kasalanan ang inyong patatawarin, sila ay pinatatawad; kung kaninong kasalanan ang inyong hahawakan, sila ay nahawakan." Santiago 5:16 — "Ipahayag sa isa\'t isa ang inyong mga kasalanan."',
+      tradition: 'Sinabi ni St. Cipriano (250 AD): "Ang mga kasalanan ay hindi pinapatawad maliban sa pamamagitan ng mga pari." Ang Didache (100 AD), ang pinakamaagang manwal ng Kristiyano, ay nagbanggit na ng kumpisal bago ang Eukaristiya.',
+      respond: 'Tanungin: "Kung ibinigay ni Hesus sa mga Apostol ang kapangyarihang magpatawad ng kasalanan (Juan 20:23), bakit niya ibibigay ang kapangyarihang iyon kung walang gagamit nito? Ang pari ay kumikilos lamang sa katawan ni Kristo."',
+    },
+  },
+
+  {
+    id: 'mass-sacrifice',
+    keywords: ['mass sacrifice', 'mass not sacrifice', 'eucharist sacrifice', 'misa', 'misa sakripisyo', 'mass unbiblical', 'once for all'],
+    en: {
+      challenge: 'The Mass is not a sacrifice — Jesus died once for all on the cross.',
+      answer: 'Catholics fully agree that Jesus died ONCE, historically, on Calvary. The Mass does not repeat that sacrifice. Rather, it makes the ONE sacrifice of Calvary present across time. It is the same sacrifice — not another one — made present sacramentally at every Mass.',
+      scripture: 'Luke 22:19 — "Do this in remembrance of me." The Greek word "anamnesis" means making present, not merely remembering. Heb 7:25 — Jesus "always lives to intercede." Rev 5:6 — In heaven, Jesus appears as "a Lamb that was slain" — the sacrifice is eternal.',
+      tradition: 'St. Justin Martyr (150 AD) described the early Christian Eucharist as a sacrifice. The Council of Trent (1545): "The Mass is the same sacrifice as Calvary, offered in an unbloody manner."',
+      respond: 'Explain: "We don\'t re-sacrifice Jesus. We join ourselves to the one eternal sacrifice that He is always offering in heaven. The Mass is a window into that eternal offering."',
+    },
+    fil: {
+      challenge: 'Ang Misa ay hindi sakripisyo — namatay si Hesus nang isang beses para sa lahat.',
+      answer: 'Lubos na sinasang-ayunan ng mga Katoliko na namatay si Hesus ISANG BESES, sa kasaysayan, sa Kalbaryo. Ang Misa ay hindi inuulit ang sakripisyong iyon. Sa halip, ginagawa nitong naroroon ang IISANG sakripisyo ng Kalbaryo sa buong panahon. Iyon ay parehong sakripisyo — hindi isa pang bago — na ginagawang naroroon sa bawat Misa.',
+      scripture: 'Lucas 22:19 — "Gawin ninyo ito bilang pag-aalaala sa akin." Ang salitang Griyego na "anamnesis" ay nangangahulugang "gawin itong naroroon," hindi basta pag-alala lamang. Heb 7:25 — Si Hesus "lagi ay nabubuhay upang mamagitan." Apoc 5:6 — Sa langit, si Hesus ay lumalabas bilang "isang Cordero na pinatay" — walang hanggan ang sakripisyo.',
+      tradition: 'Inilalarawan ni St. Justin Martyr (150 AD) ang maagang Kristiyanong Eukaristiya bilang sakripisyo. Konsilyo ng Trent (1545): "Ang Misa ay parehong sakripisyo ng Kalbaryo, iniaalok sa walang dugong paraan."',
+      respond: 'Ipaliwanag: "Hindi namin inuulit ang sakripisyo ni Hesus. Isinasama namin ang aming sarili sa iisang walang hanggang sakripisyo na lagi Niyang iniaalok sa langit. Ang Misa ay isang bintana sa walang hanggang pag-aalay na iyon."',
+    },
+  },
+
+  // ── BIBLE ──────────────────────────────────────────────────────────
+
+  {
+    id: 'deuterocanonical',
+    keywords: ['apocrypha', 'deuterocanonical', 'added books', 'extra books', 'catholic bible', 'dagdag na aklat', 'apocrypha bible', 'removed books'],
+    en: {
+      challenge: 'Catholics added extra books to the Bible.',
+      answer: 'Catholics did NOT add books — Protestants REMOVED 7 books in the 1500s. The Catholic Bible has 73 books; the Protestant has 66. The 7 "deuterocanonical" books (Tobit, Judith, 1&2 Maccabees, Wisdom, Sirach, Baruch) were in the Septuagint — the Greek Bible Jesus and the Apostles actually quoted.',
+      scripture: 'Jesus and the New Testament quote the Septuagint (Greek OT) over 300 times. The deuterocanonical books were used by the early Church. 2 Macc 12:46 supports prayers for the dead — which is why Luther removed it.',
+      tradition: 'The Council of Hippo (393 AD) and Council of Carthage (397 AD) — both before any Protestant split — defined the 73-book Catholic canon. St. Jerome included all 73 in the Latin Vulgate (400 AD).',
+      respond: 'Ask: "Did you know the 7 books were part of the Bible for 1,500 years before Luther removed them? The question is not why Catholics added them, but why Protestants removed them."',
+    },
+    fil: {
+      challenge: 'Nagdagdag ng mga karagdagang aklat ang mga Katoliko sa Biblia.',
+      answer: 'Hindi NAGDAGDAG ang mga Katoliko — NAG-ALIS ang mga Protestante ng 7 aklat noong 1500s. Ang Bibliyang Katoliko ay may 73 aklat; ang Protestante ay 66. Ang 7 "deuterocanonical" na aklat (Tobias, Judith, 1 at 2 Maccabeo, Karunungan, Ecclesiasticus, Baruch) ay nasa Septuagint — ang Griyegong Bibliang aktwal na sinipi ni Hesus at ng mga Apostol.',
+      scripture: 'Si Hesus at ang Bagong Tipan ay sumipi ng Septuagint (Griyegong AT) nang mahigit 300 beses. Ginamit ng maagang Simbahan ang mga deuterocanonical na aklat. Sinusuportahan ng 2 Macc 12:46 ang pagdarasal para sa mga patay — kaya naman inalis ito ni Luther.',
+      tradition: 'Ang Konsilyo ng Hippo (393 AD) at Konsilyo ng Carthage (397 AD) — pareho bago ang anumang Protestante na paghihiwalay — ay tinukoy ang 73-aklat na Katolikong kanon. Isinama ni St. Jerome ang lahat ng 73 sa Latin Vulgate (400 AD).',
+      respond: 'Tanungin: "Alam mo ba na ang 7 aklat ay bahagi ng Biblia sa loob ng 1,500 taon bago inalis ni Luther? Ang tanong ay hindi kung bakit nagdagdag ang mga Katoliko, kundi kung bakit nag-alis ang mga Protestante."',
+    },
+  },
+
+  {
+    id: 'sola-scriptura',
+    keywords: ['sola scriptura', 'bible alone', 'scripture alone', 'bible only', 'biblia lamang', 'sola scriptura unbiblical'],
+    en: {
+      challenge: 'The Bible alone is our authority (Sola Scriptura) — we don\'t need Tradition.',
+      answer: '"Bible alone" is self-refuting: the Bible never says Scripture is the only authority. The Bible itself came FROM the Church — the Catholic Church determined which books belong in the Bible at the Councils of Hippo and Carthage. You are trusting the Church\'s decision every time you open your Bible.',
+      scripture: '2 Thess 2:15 — "Hold fast to the traditions which you were taught, whether by word or by our letter." 1 Tim 3:15 — "The Church is the pillar and foundation of truth." John 21:25 — "Jesus did many other things not written in this book."',
+      tradition: 'Sola Scriptura was invented by Martin Luther in 1517. For 1,500 years, Christians followed Scripture AND Tradition. St. Basil (370 AD): "Of the beliefs and practices... some we have from written teaching, some we have received as a tradition."',
+      respond: 'Ask: "If the Bible alone is the authority, which Bible? Who decided which books belong in it? The answer is: the Catholic Church at the Council of Carthage in 397 AD."',
+    },
+    fil: {
+      challenge: 'Ang Biblia lamang ang aming awtoridad (Sola Scriptura) — hindi namin kailangan ang Tradisyon.',
+      answer: 'Ang "Biblia lamang" ay nagsasalungat sa sarili: hindi sinasabi ng Biblia na ang Kasulatan ay ang tanging awtoridad. Ang Biblia mismo ay nanggaling SA Simbahan — ang Simbahang Katoliko ang nagpasya kung aling mga aklat ang nabibilang sa Biblia sa mga Konsilyo ng Hippo at Carthage. Pinagkakatiwalaan mo ang desisyon ng Simbahan sa tuwing binubuksan mo ang iyong Biblia.',
+      scripture: '2 Tes 2:15 — "Panghawakan ang mga tradisyong itinuro sa inyo, maging sa salita o sa aming sulat." 1 Tim 3:15 — "Ang Simbahan ay haligi at pundasyon ng katotohanan." Juan 21:25 — "Marami pang ibang ginawa si Hesus na hindi nakasulat sa aklat na ito."',
+      tradition: 'Ang Sola Scriptura ay naimbento ni Martin Luther noong 1517. Sa loob ng 1,500 taon, sinunod ng mga Kristiyano ang Kasulatan AT Tradisyon. Sinabi ni St. Basilio (370 AD): "Ng mga paniniwala at gawi... ang ilan ay nagmula sa nakasulat na turo, ang ilan ay natanggap namin bilang tradisyon."',
+      respond: 'Tanungin: "Kung ang Biblia lamang ang awtoridad, alin sa mga Biblia? Sino ang nagpasya kung aling mga aklat ang nabibilang dito? Ang sagot: ang Simbahang Katoliko sa Konsilyo ng Carthage noong 397 AD."',
+    },
+  },
+
+  // ── SALVATION ──────────────────────────────────────────────────────
+
+  {
+    id: 'catholics-saved',
+    keywords: ['catholics not saved', 'are catholics saved', 'salvation', 'born again', 'hindi ligtas ang mga katoliko', 'naligtas ba', 'accept jesus'],
+    en: {
+      challenge: 'Catholics are not saved because they don\'t accept Jesus as personal Lord and Savior.',
+      answer: 'Catholics absolutely believe in Jesus as Lord and Savior. Every Mass, every prayer, every sacrament is centered on Christ. Salvation is by God\'s grace through faith — and Catholics profess this at every baptism and in the Creed. Catholics simply understand that saving faith is not a one-time declaration but a living relationship expressed in love and obedience.',
+      scripture: 'Matt 7:21 — "Not everyone who says Lord, Lord will enter the kingdom of heaven, but he who does the will of my Father." James 2:24 — "A person is justified by works and not by faith alone." John 6:54 — "Whoever eats my flesh... has eternal life." (Jesus ties salvation to the Eucharist.)',
+      tradition: 'The early Christians were baptized, received the Eucharist, and lived sacramental lives. St. Ignatius of Antioch (107 AD) — a direct disciple of the Apostle John — wrote about the Eucharist as the "medicine of immortality."',
+      respond: 'Say warmly: "I believe Jesus Christ is my Lord and Savior. Do you? Then we agree on the most important thing. Let\'s not let differences in practice divide us from our shared love of Christ."',
+    },
+    fil: {
+      challenge: 'Hindi naligtas ang mga Katoliko dahil hindi nila tinatanggap si Hesus bilang personal na Panginoon at Tagapagligtas.',
+      answer: 'Naniniwala nang lubusan ang mga Katoliko kay Hesus bilang Panginoon at Tagapagligtas. Bawat Misa, bawat panalangin, bawat sakramento ay nakasentro kay Kristo. Ang kaligtasan ay sa pamamagitan ng grasya ng Diyos sa pamamagitan ng pananampalataya — at ipinagtatapat ito ng mga Katoliko sa bawat binyag at sa Kredo. Nauunawaan lamang ng mga Katoliko na ang nagliligtas na pananampalataya ay hindi isang beses na pagpapahayag kundi isang buhay na relasyon na ipinahayag sa pagmamahal at pagsunod.',
+      scripture: 'Mat 7:21 — "Hindi lahat ng nagsasabi sa akin ng Panginoon, Panginoon ang makapapasok sa kaharian ng langit, kundi ang gumagawa ng kalooban ng aking Ama." Santiago 2:24 — "Ang tao ay inaaringganap sa mga gawa at hindi sa pananampalataya lamang." Juan 6:54 — "Ang kumakain ng aking laman... ay may buhay na walang hanggan."',
+      tradition: 'Ang mga maagang Kristiyano ay bininyagan, tumanggap ng Eukaristiya, at namuhay ng sacramental na buhay. Si St. Ignacio ng Antioch (107 AD) — isang direktang alagad ng Apostol Juan — ay sumulat tungkol sa Eukaristiya bilang "gamot ng imortalidad."',
+      respond: 'Sabihin nang mainit: "Naniniwala ako na si Hesu-Kristo ang aking Panginoon at Tagapagligtas. Ikaw ba? Kung gayon, nagkakasundo tayo sa pinakamahalagang bagay. Huwag hayaang paghiwalayin tayo ng mga pagkakaiba sa gawi mula sa ating magkaparehong pagmamahal kay Kristo."',
+    },
+  },
+
+  {
+    id: 'faith-alone',
+    keywords: ['faith alone', 'sola fide', 'faith alone saves', 'works righteousness', 'pananampalataya lamang', 'works salvation', 'grace alone'],
+    en: {
+      challenge: 'Faith alone saves (Sola Fide) — works cannot earn salvation.',
+      answer: 'Catholics agree that salvation is by grace — it cannot be earned. But "faith alone" appears ONCE in the Bible: James 2:24 — "A person is NOT justified by faith alone." St. Paul\'s argument against "works" refers to Jewish ceremonial law, not moral obedience. A living faith naturally produces good works.',
+      scripture: 'Eph 2:8-9 — "By grace you have been saved through faith." (Catholics fully agree!) But also: Eph 2:10 — "Created in Christ Jesus for good works." Matt 25:35-40 — At judgment, Jesus rewards those who fed the hungry and clothed the poor. James 2:17 — "Faith without works is dead."',
+      tradition: 'Sola Fide was invented by Martin Luther in 1517. He actually wanted to remove James from the Bible, calling it an "epistle of straw." The Council of Trent (1547): Justification is by grace through faith working through love (Gal 5:6).',
+      respond: 'Agree first: "You\'re right that we cannot earn salvation — Catholics believe that too. The question is: does saving faith remain passive, or does it transform us and produce love? We say a living faith always bears fruit."',
+    },
+    fil: {
+      challenge: 'Ang pananampalataya lamang ang nagliligtas (Sola Fide) — hindi maaaring maligtas sa pamamagitan ng mga gawa.',
+      answer: 'Sang-ayon ang mga Katoliko na ang kaligtasan ay sa pamamagitan ng grasya — hindi ito maaaring kitain. Ngunit ang "pananampalataya lamang" ay lumabas ISANG BESES sa Biblia: Santiago 2:24 — "Ang tao ay HINDI inaaringganap sa pananampalataya lamang." Ang argumento ni St. Pablo laban sa "mga gawa" ay tumutukoy sa seremonya ng batas ng mga Hudyo, hindi sa moral na pagsunod. Ang isang buhay na pananampalataya ay natural na nagbubunga ng mabuting gawa.',
+      scripture: 'Efeso 2:8-9 — "Sa grasya kayo naligtas sa pamamagitan ng pananampalataya." (Lubos na sang-ayon ang mga Katoliko!) Pero: Efeso 2:10 — "Nilikha kay Hesu-Kristo para sa mabuting mga gawa." Mat 25:35-40 — Sa paghuhukom, ginagantimpalaan ni Hesus ang mga nagpakain sa gutom. Santiago 2:17 — "Ang pananampalataya na walang mga gawa ay patay."',
+      tradition: 'Ang Sola Fide ay naimbento ni Martin Luther noong 1517. Nais pa niya na alisin ang Santiago mula sa Biblia, tinatawag itong "sulat ng dayami." Konsilyo ng Trent (1547): Ang pagiging ganap ay sa pamamagitan ng grasya sa pamamagitan ng pananampalatayang gumagana sa pagmamahal (Gal 5:6).',
+      respond: 'Sang-ayunan muna: "Tama ka na hindi natin maaaring kitain ang kaligtasan — naniniwala rin doon ang mga Katoliko. Ang tanong ay: ang nagliligtas na pananampalataya ba ay nananatiling pasibo, o binabago tayo nito at nagbubunga ng pagmamahal? Sinasabi namin na ang isang buhay na pananampalataya ay laging nagbububunga."',
+    },
+  },
+
+  // ── STATUES & IMAGES ───────────────────────────────────────────────
+
+  {
+    id: 'statues-idolatry',
+    keywords: ['statues idolatry', 'images idolatry', 'idol worship', 'idol', 'rebulto', 'idolatra', 'worship statues', 'sinasamba ang rebulto'],
+    en: {
+      challenge: 'Catholics worship statues and images — that is idolatry forbidden by God.',
+      answer: 'Catholics do NOT worship statues. We use images to help us focus our minds on the person they represent — just as you might kiss a photo of your mother. God Himself commanded images to be made: He told Moses to make bronze serpent (Num 21:8) and golden cherubim for the Ark (Exod 25:18). The difference between honor and worship is key.',
+      scripture: 'Exod 25:18 — God commanded: "Make two cherubim of gold." Num 21:8-9 — God commanded a bronze serpent for healing. John 3:14 — Jesus references this approvingly. The problem in the OT was worshipping images AS gods, not using them as aids to prayer.',
+      tradition: 'The Second Council of Nicaea (787 AD) formally defended sacred images (icons) against the iconoclasts, teaching that veneration goes to the person represented, not the image itself.',
+      respond: 'Ask: "Do you have photos of loved ones in your home? Do you worship them? Of course not. We use statues the same way — they remind us of holy people who point us toward God."',
+    },
+    fil: {
+      challenge: 'Sinasamba ng mga Katoliko ang mga rebulto at larawan — iyon ay idolatriya na ipinagbabawal ng Diyos.',
+      answer: 'Hindi SINASAMBA ng mga Katoliko ang mga rebulto. Ginagamit namin ang mga larawan upang matulungan kaming ituon ang aming isipan sa taong kinakatawan nila — tulad ng halik mo sa larawan ng iyong ina. Utos mismo ng Diyos na gumawa ng mga larawan: sinabi Niya kay Moises na gumawa ng tansong ahas (Bil 21:8) at gintong kerubin para sa Arko (Exodo 25:18).',
+      scripture: 'Exodo 25:18 — Utos ng Diyos: "Gumawa ng dalawang kerubin na ginto." Bil 21:8-9 — Nag-utos ang Diyos ng tansong ahas para sa pagpapagaling. Juan 3:14 — Binanggit ni Hesus ito nang may pahintulot. Ang problema sa AT ay ang pagsamba sa mga larawan BILANG mga diyos, hindi ang paggamit ng mga ito bilang tulong sa panalangin.',
+      tradition: 'Ang Ikalawang Konsilyo ng Nicaea (787 AD) ay pormalmente nagdepensa ng mga banal na larawan (icon) laban sa mga iconoclast, nagtuturo na ang paggalang ay napupunta sa taong kinakatawan, hindi sa larawang mismo.',
+      respond: 'Tanungin: "Mayroon ka bang mga larawan ng mga mahal mo sa buhay sa iyong tahanan? Sinasamba mo ba sila? Siyempre hindi. Ganoon din ang paggamit namin ng mga rebulto — pinapaalalahanan nila tayo ng mga banal na taong nagtuturo sa atin patungo sa Diyos."',
+    },
+  },
+
+  // ── ONCE SAVED ALWAYS SAVED ────────────────────────────────────────
+
+  {
+    id: 'once-saved',
+    keywords: ['once saved always saved', 'eternal security', 'lose salvation', 'lose your faith', 'hindi mawawala ang kaligtasan', 'perseverance of saints'],
+    en: {
+      challenge: 'Once saved, always saved — you cannot lose your salvation.',
+      answer: 'This doctrine (Perseverance of Saints) was invented by John Calvin in the 1500s. It contradicts the Bible\'s many warnings to persevere. If salvation cannot be lost, why does Paul warn "work out your salvation with fear and trembling" (Phil 2:12)? Why does Jesus warn "he who endures to the end will be saved" (Matt 24:13)?',
+      scripture: 'Heb 6:4-6 — "Those who have been enlightened... and have fallen away, it is impossible to bring them back to repentance." 1 Cor 9:27 — Paul says he disciplines himself "lest I be disqualified." Rev 3:5 — Jesus warns He may "erase their name from the book of life."',
+      tradition: 'The early Church universally taught that apostasy was possible. The Council of Trent (1547): No one can know with absolute certainty that they are among the predestined, without a special revelation.',
+      respond: 'Ask: "If you truly cannot lose salvation, why does Paul say he fears being disqualified (1 Cor 9:27)? Is Paul wrong? God\'s gift of salvation calls us to faithful response — not a one-time transaction but a lifelong covenant."',
+    },
+    fil: {
+      challenge: 'Kung naligtas ka na isang beses, lagi kang naligtas — hindi mo maaaring mawala ang iyong kaligtasan.',
+      answer: 'Ang doktrinang ito (Perseverance of Saints) ay naimbento ni John Calvin noong 1500s. Salungat ito sa maraming babala ng Biblia na manatili. Kung hindi maaaring mawala ang kaligtasan, bakit nagbababala si Pablo na "gawin ninyo ang inyong kaligtasan nang may takot at panginginig" (Fil 2:12)? Bakit nagbababala si Hesus na "ang magtiis hanggang sa katapusan ay maliligtas" (Mat 24:13)?',
+      scripture: 'Heb 6:4-6 — "Ang mga naging maliwanag na... at nahulog, imposible silang dalhin pabalik sa pagsisisi." 1 Cor 9:27 — Sinasabi ni Pablo na dinidisiplina niya ang kanyang sarili "baka ako ay maging hindi karapat-dapat." Apoc 3:5 — Nagbababala si Hesus na maaari Niyang "burahin ang kanilang pangalan mula sa libro ng buhay."',
+      tradition: 'Ang maagang Simbahan ay unibersalmente nagturo na posible ang apostasya. Konsilyo ng Trent (1547): Walang sinuman ang makakaalam nang may ganap na katiyakan na sila ay nasa mga predestinado, nang walang espesyal na pahayag.',
+      respond: 'Tanungin: "Kung talagang hindi maaaring mawala ang kaligtasan, bakit sinasabi ni Pablo na natatakot siyang maging hindi karapat-dapat (1 Cor 9:27)? Mali ba si Pablo? Ang regalo ng kaligtasan ng Diyos ay nananawagan sa atin ng tapat na pagtugon — hindi isang beses na transaksyon kundi isang panghabambuhay na tipan."',
+    },
+  },
+]
+
+/**
+ * Find the best matching offline answer for a given query.
+ * Returns null if no good match found.
+ */
+export function findOfflineAnswer(query, langCode) {
+  const q = query.toLowerCase()
+  let best = null
+  let bestScore = 0
+
+  for (const answer of OFFLINE_ANSWERS) {
+    let score = 0
+    for (const kw of answer.keywords) {
+      if (q.includes(kw.toLowerCase())) {
+        score += kw.split(' ').length // longer keyword = higher score
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score
+      best = answer
+    }
+  }
+
+  if (!best || bestScore === 0) return null
+
+  const lang = best[langCode] || best['en']
+  return formatOfflineAnswer(lang, langCode)
+}
+
+function formatOfflineAnswer(data, langCode) {
+  const labels = {
+    en:  { challenge: '⚡ THE CHALLENGE',    answer: '✅ CATHOLIC ANSWER', scripture: '📖 SCRIPTURE', tradition: '📜 TRADITION & HISTORY', respond: '💬 HOW TO RESPOND' },
+    fil: { challenge: '⚡ ANG HAMON',        answer: '✅ SAGOT NG KATOLIKO', scripture: '📖 KASULATAN', tradition: '📜 TRADISYON AT KASAYSAYAN', respond: '💬 PAANO SUMAGOT' },
+    ceb: { challenge: '⚡ ANG HAGIT',        answer: '✅ TUBAG SA KATOLIKO', scripture: '📖 KASULATAN', tradition: '📜 TRADISYON UG KASAYSAYAN', respond: '💬 UNSAON PAGTUBAG' },
+    ilo: { challenge: '⚡ TI PANNAKIGUBAT', answer: '✅ SUNGBAT TI KATOLIKO', scripture: '📖 NASANTUAN A SURSURAT', tradition: '📜 TRADISYON KEN PAKASARITAAN', respond: '💬 KASANO NGA SUNGBATAN' },
+  }
+  const l = labels[langCode] || labels['en']
+
+  return [
+    `${l.challenge}:\n${data.challenge}`,
+    `${l.answer}:\n${data.answer}`,
+    `${l.scripture}:\n${data.scripture}`,
+    `${l.tradition}:\n${data.tradition}`,
+    `${l.respond}:\n${data.respond}`,
+  ].join('\n\n')
+}

@@ -1,169 +1,112 @@
-# ✝️ Catholic Shield — Faith Defense App
+import { useState, useEffect } from 'react'
+import { findOfflineAnswer } from '../data/offlineAnswers'
 
-A multilingual Catholic apologetics app that helps ordinary Catholics defend their faith using Scripture, Sacred Tradition, and the Magisterium.
+// ── System prompt for Gemini online mode ──────────────────────
+const buildSystemPrompt = (language) =>
+  `You are a learned Catholic apologist and scholar — warm, confident, and grounded in Scripture, Sacred Tradition, and the Magisterium. Your role is to help ordinary Catholics defend their faith with charity and clarity.
 
-**🆓 100% FREE to run** — powered by Google Gemini's free API (no credit card needed).  
-**🇵🇭 Supports 8 Philippine languages** plus 10 international languages.
+CRITICAL INSTRUCTION: You MUST respond ENTIRELY in ${language.name} (${language.localName}). Every single word of your response must be in ${language.name}. Do not mix in English or any other language unless quoting a Bible verse reference number (e.g. John 3:16).
 
----
+When someone presents an attack or challenge to the Catholic faith:
+1. ACKNOWLEDGE the concern with respect — never be dismissive
+2. Give a CLEAR, DIRECT answer in simple everyday language (no jargon)
+3. Cite SCRIPTURE (book chapter:verse)
+4. Cite EARLY CHURCH FATHERS or COUNCIL DOCUMENTS when relevant
+5. Address the MISUNDERSTANDING charitably
+6. End with a SHORT reminder to respond with love and peace
 
-## ✨ Features
+Format your response using these exact emoji markers (translate the section labels into ${language.name}):
+⚡ [CHALLENGE label in ${language.name}]: restate the challenge briefly
+✅ [ANSWER label in ${language.name}]: clear direct answer
+📖 [SCRIPTURE label in ${language.name}]: Bible verses with references
+📜 [TRADITION label in ${language.name}]: Early Church, Councils, Saints
+💬 [RESPOND label in ${language.name}]: a gentle, practical suggestion for the conversation
 
-- 🌍 **Multilingual** — Full responses in your chosen language
-- 📖 **Scripture-based** — Every answer backed by Bible verses
-- 📜 **Tradition & History** — Early Church Fathers, Councils, Saints
-- ⚡ **Quick Attacks** — Tap common challenges for instant responses
-- 💬 **Free chat** — Type anything someone said to you
-- 🇵🇭 **Philippine languages first** — Built for Filipino Catholics
+Keep responses practical — this is for a regular Catholic in a real conversation, not a theology lecture.
+Be concise but complete. Use a confident, warm, pastoral tone.
+ALL TEXT MUST BE IN ${language.name}.`
 
----
+// Convert message history to Gemini format
+function toGeminiMessages(messages) {
+  return messages.map(m => ({
+    role: m.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: m.content }],
+  }))
+}
 
-## 🔑 Step 1 — Get Your FREE Gemini API Key
+// ── Network check ──────────────────────────────────────────────
+export function useOnlineStatus() {
+  const [isOnline, setIsOnline] = useState(navigator.onLine)
+  useEffect(() => {
+    const on  = () => setIsOnline(true)
+    const off = () => setIsOnline(false)
+    window.addEventListener('online',  on)
+    window.addEventListener('offline', off)
+    return () => { window.removeEventListener('online', on); window.removeEventListener('offline', off) }
+  }, [])
+  return isOnline
+}
 
-1. Go to **[aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)**
-2. Sign in with your Google account
-3. Click **"Create API Key"**
-4. Copy the key — that's it! ✅
+// ── Main chat hook ─────────────────────────────────────────────
+export function useChat(lang) {
+  const [messages, setMessages] = useState([])
+  const [loading, setLoading]   = useState(false)
+  const isOnline = useOnlineStatus()
 
-> **Free limits:** 15 requests/minute · 1,500 requests/day · No credit card ever needed.
+  const sendMessage = async (userMsg) => {
+    if (!userMsg.trim() || !lang) return
+    const newMsgs = [...messages, { role: 'user', content: userMsg }]
+    setMessages(newMsgs)
+    setLoading(true)
 
----
+    // ── OFFLINE: use built-in knowledge base ──────────────────
+    if (!isOnline) {
+      await new Promise(r => setTimeout(r, 600)) // natural feel
+      const offlineReply = findOfflineAnswer(userMsg, lang.code)
+      const reply = offlineReply ||
+        (lang.code === 'fil'
+          ? '📵 Offline mode: Walang nahanap na sagot para sa tanong na ito. Subukan ang isa pang paraan ng pagtatanong, o kumonekta sa internet para sa kumpletong AI na tugon.'
+          : '📵 Offline mode: No matching answer found for that question. Try rephrasing, or go online for a full AI response.')
+      setMessages([...newMsgs, { role: 'assistant', content: reply }])
+      setLoading(false)
+      return
+    }
 
-## 💻 Step 2 — Run Locally
+    // ── ONLINE: call Gemini API ────────────────────────────────
+    try {
+      const endpoint = import.meta.env.PROD
+        ? '/api/chat'
+        : '/gemini-proxy/v1beta/models/gemini-1.5-flash:generateContent'
 
-```bash
-# 1. Clone your repo
-git clone https://github.com/YOUR_USERNAME/catholic-shield.git
-cd catholic-shield
+      const headers = { 'Content-Type': 'application/json' }
+      if (!import.meta.env.PROD) {
+        headers['x-gemini-key'] = import.meta.env.VITE_GEMINI_API_KEY
+      }
 
-# 2. Install dependencies
-npm install
+      const body = {
+        system_instruction: { parts: [{ text: buildSystemPrompt(lang) }] },
+        contents: toGeminiMessages(newMsgs),
+        generationConfig: { maxOutputTokens: 1200, temperature: 0.7 },
+      }
 
-# 3. Create your .env file
-cp .env.example .env
-# Open .env and paste your Gemini key
+      const res  = await fetch(endpoint, { method: 'POST', headers, body: JSON.stringify(body) })
+      const data = await res.json()
+      const reply =
+        data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+        data?.error?.message ||
+        'Error generating response. Please try again.'
+      setMessages([...newMsgs, { role: 'assistant', content: reply }])
+    } catch {
+      // If Gemini fails, fall back to offline knowledge base
+      const offlineReply = findOfflineAnswer(userMsg, lang.code)
+      const reply = offlineReply ||
+        'Connection error. Please check your internet and try again.'
+      setMessages([...newMsgs, { role: 'assistant', content: reply }])
+    }
+    setLoading(false)
+  }
 
-# 4. Start the app
-npm run dev
-```
+  const clearMessages = () => setMessages([])
 
-Open **[http://localhost:5173](http://localhost:5173)** in your browser. 🎉
-
----
-
-## ☁️ Step 3 — Deploy FREE on Vercel
-
-### Via Vercel website (easiest — no command line needed)
-
-1. Push your code to GitHub (see below)
-2. Go to **[vercel.com](https://vercel.com)** → Sign in with GitHub
-3. Click **"Add New Project"** → Import your `catholic-shield` repo
-4. Under **"Environment Variables"**, add:
-   | Name | Value |
-   |------|-------|
-   | `GEMINI_API_KEY` | your Gemini key |
-5. Click **"Deploy"** 🚀
-
-Your app will be live at `https://catholic-shield.vercel.app` (or similar) — **free forever**.
-
-### Via Vercel CLI
-```bash
-npm install -g vercel
-vercel
-# Follow the prompts, add GEMINI_API_KEY when asked
-```
-
----
-
-## ☁️ Deploy FREE on Netlify (Alternative)
-
-1. Go to **[netlify.com](https://netlify.com)** → Sign in
-2. **"Add new site"** → **"Import an existing project"** → Connect GitHub
-3. Build settings:
-   - **Build command:** `npm run build`
-   - **Publish directory:** `dist`
-4. **"Environment variables"** → Add `GEMINI_API_KEY`
-5. **"Deploy site"** 🚀
-
----
-
-## 📤 Push to GitHub
-
-```bash
-git init
-git add .
-git commit -m "Initial commit — Catholic Shield"
-
-# Create a new repo on github.com first, then:
-git remote add origin https://github.com/YOUR_USERNAME/catholic-shield.git
-git branch -M main
-git push -u origin main
-```
-
----
-
-## 📁 Project Structure
-
-```
-catholic-shield/
-├── api/
-│   └── chat.js                  ← Vercel serverless proxy (keeps API key secret)
-├── public/
-│   └── cross.svg                ← Favicon
-├── src/
-│   ├── components/
-│   │   ├── ChatScreen.jsx       ← Chat/conversation screen
-│   │   ├── HomeScreen.jsx       ← Main home screen
-│   │   ├── LangPill.jsx         ← Language switcher button
-│   │   ├── LanguageScreen.jsx   ← Language selection screen
-│   │   └── MessageBubble.jsx    ← Individual chat message
-│   ├── data/
-│   │   ├── languages.js         ← All 18 languages
-│   │   ├── topics.js            ← Categories & quick topics
-│   │   └── uiStrings.js         ← Localized UI text
-│   ├── hooks/
-│   │   └── useChat.js           ← Gemini API chat logic
-│   ├── App.css / App.jsx        ← Root + screen routing
-│   ├── index.css                ← Global styles
-│   └── main.jsx                 ← React entry point
-├── .env.example                 ← Copy this to .env
-├── .gitignore                   ← Excludes .env, node_modules, dist
-├── index.html
-├── package.json
-├── vercel.json                  ← Vercel config
-└── vite.config.js               ← Dev proxy config
-```
-
----
-
-## 🆓 Why It's Free
-
-| Service | Free Tier |
-|---------|-----------|
-| **Google Gemini API** | 1,500 requests/day, no credit card |
-| **Vercel Hosting** | Free for personal projects |
-| **GitHub** | Free for public repos |
-
-**Total monthly cost: $0** ✅
-
----
-
-## 🔒 Security Notes
-
-- Your API key is **never** exposed to the browser
-- In local dev: Vite proxy injects the key server-side
-- In production: Vercel serverless function keeps key in environment variables
-- `.env` is in `.gitignore` so it's never committed to GitHub
-
----
-
-## ✝️ Built with
-
-- [React](https://react.dev) + [Vite](https://vitejs.dev)
-- [Google Gemini API](https://aistudio.google.com) (gemini-1.5-flash — free)
-- [Vercel](https://vercel.com) (free hosting)
-- [Google Fonts](https://fonts.google.com) — Cinzel + Crimson Pro
-
----
-
-*"Always be ready to give an explanation to anyone who asks you for a reason for your hope." — 1 Peter 3:15*
+  return { messages, loading, sendMessage, clearMessages, isOnline }
+}
