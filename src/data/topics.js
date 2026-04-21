@@ -1,13 +1,13 @@
 // Base category IDs and icons (never change)
 export const CATEGORIES = [
-  { id: 'bible',      icon: '📖' },
-  { id: 'mary',       icon: '🌹' },
-  { id: 'pope',       icon: '⛪' },
-  { id: 'sacraments', icon: '✝️' },
-  { id: 'purgatory',  icon: '🕯️' },
-  { id: 'salvation',  icon: '🙏' },
-  { id: 'tradition',  icon: '📜' },
-  { id: 'other',      icon: '❓' },
+  { id: 'bible',      icon: '📖', label: 'Bible & Scripture' },
+  { id: 'mary',       icon: '🌹', label: 'Mary & Saints' },
+  { id: 'pope',       icon: '⛪', label: 'Pope & Authority' },
+  { id: 'sacraments', icon: '✝️', label: 'Sacraments' },
+  { id: 'purgatory',  icon: '🕯️', label: 'Purgatory' },
+  { id: 'salvation',  icon: '🙏', label: 'Salvation & Faith' },
+  { id: 'tradition',  icon: '📜', label: 'Sacred Tradition' },
+  { id: 'other',      icon: '❓', label: 'Other Attacks' },
   ]
 
 // Per-language category labels
