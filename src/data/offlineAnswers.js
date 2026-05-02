@@ -556,15 +556,6 @@ const KB = [
  💬 Responder: "La ironía de la Sola Scriptura es que no puedes encontrarla en las Escrituras. La propia Biblia asume una Iglesia viva y una Tradición viva para interpretar y transmitir la fe fielmente."`,
     },
   },
-];
-
-// Simple keyword-matching search
-/**
- * Find the best offline answer for a user query.
- * @param {string} query - the user's message
- * @param {string} langCode - language code (e.g. 'ceb', 'fil', 'es', 'en')
- * @returns {string|null} formatted answer string in the requested language, or null if no match
- */
   // ── ADDITIONAL APOLOGETICS ENTRIES (Extended KB) ──────────────────────────
   {
     keywords: [
@@ -827,6 +818,7 @@ const KB = [
  💬 Tubag: "Ang Catholic Church mao ang nag-establish sa unang mga unibersidad sa Europe."`,
     },
   },
+];
 
 // ── BIBLE VERSE SEARCH ──────────────────────────────────────────────────────
 const BIBLE_BOOK_MAP = {
