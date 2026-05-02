@@ -889,12 +889,12 @@ const BIBLE_BOOK_MAP = {
  */
 export function detectBibleVerse(text) {
   const t = text.trim().toLowerCase()
-  const patterns = [
-    /^(ds+[a-záéíóúüñ]+(?:s+[a-záéíóúüñ]+)*)s+(d+):(d+(?:-d+)?)$/i,
-    /^([a-záéíóúüñ]+(?:s+[a-záéíóúüñ]+)*)s+(d+):(d+(?:-d+)?)$/i,
-    /^(ds+[a-záéíóúüñ]+(?:s+[a-záéíóúüñ]+)*)s+(d+)$/i,
-    /^([a-záéíóúüñ]+(?:s+[a-záéíóúüñ]+)*)s+(d+)$/i,
-  ]
+  // Match: "1 BookName Chapter:Verse" or "BookName Chapter:Verse" etc
+  const numWordBook = /^(\d\s+[a-z\u00e0-\u024f]+(?:\s+[a-z\u00e0-\u024f]+)*)\s+(\d+):(\d+(?:-\d+)?)$/i
+  const wordBook    = /^([a-z\u00e0-\u024f]+(?:\s+[a-z\u00e0-\u024f]+)*)\s+(\d+):(\d+(?:-\d+)?)$/i
+  const numWordCh   = /^(\d\s+[a-z\u00e0-\u024f]+(?:\s+[a-z\u00e0-\u024f]+)*)\s+(\d+)$/i
+  const wordCh      = /^([a-z\u00e0-\u024f]+(?:\s+[a-z\u00e0-\u024f]+)*)\s+(\d+)$/i
+  const patterns = [numWordBook, wordBook, numWordCh, wordCh]
   for (const pattern of patterns) {
     const match = t.match(pattern)
     if (match) {
