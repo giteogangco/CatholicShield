@@ -565,6 +565,374 @@ const KB = [
  * @param {string} langCode - language code (e.g. 'ceb', 'fil', 'es', 'en')
  * @returns {string|null} formatted answer string in the requested language, or null if no match
  */
+  // ── ADDITIONAL APOLOGETICS ENTRIES (Extended KB) ──────────────────────────
+  {
+    keywords: [
+      'apostolic succession','apostoliko','bishop succession','nagtudlo og successor',
+      'sunod sa mga apostol','pagpadayon sa mga apostoles',
+    ],
+    answers: {
+      en: `⚡ Challenge: There is no apostolic succession in the Bible.
+
+ ✅ Answer: Apostolic succession is clearly in Scripture: Matthias replaced Judas (Acts 1:15-26), Paul gave instructions to Timothy and Titus to appoint church leaders. The Church has had a structured hierarchy from the beginning.
+
+ 📖 Scripture: Acts 1:20-26 — replacement of Judas. 1 Tim 4:14 — laying on of hands. Titus 1:5 — appointing presbyters in every city. 2 Tim 2:2 — "entrust to faithful men who will be able to teach others."
+
+ 📜 Tradition: Irenaeus (180 AD) listed the succession from Peter to his own time. Clement of Rome (96 AD) exercised authority over the church in Corinth, demonstrating apostolic authority.
+
+ 💬 Respond: "If there is no apostolic succession, who gave Luther the authority to teach? Christ built a structured Church (Eph 4:11-13) — and that structure continues today."`,
+      ceb: `⚡ Hangyo: Walay apostolic succession sa Bibliya.
+
+ ✅ Tubag: Ang apostolic succession klaro sa Kasulatan: Si Matthias mipuli kang Judas (Gawa 1:15-26). Si Pablo naghatag og instruksyon kang Timoteo ug Tito sa paghirang og mga lider sa simbahan. Ang Simbahan adunay structured hierarchy gikan pa sa sinugdanan.
+
+ 📖 Kasulatan: Gawa 1:20-26 — pag-ilis kang Judas. 1 Tim 4:14 — laying on of hands. Tito 1:5 — paghirang og presbyters sa matag ciudad.
+
+ 📜 Tradisyon: Irenaeus (180 AD): Naglista sa succession gikan kang Pedro hangtod sa iyang panahon. Clement of Rome (96 AD): nagsugo sa simbahan sa Corinto — nagpamugna sa authority.
+
+ 💬 Tubag: "Kung walay apostolic succession, kinsa naghatag kang Luther og authority sa pagtudlo? Si Kristo nagbutang og structure (Eph 4:11-13) — ug kini nagpadayon."`,
+    },
+  },
+  {
+    keywords: [
+      'real presence','transubstantiation','body blood communion','simbolo lamang',
+      'tinapay bino komunyon','bread wine symbol','eucharist is just symbol',
+    ],
+    answers: {
+      en: `⚡ Challenge: The bread and wine in Communion are just symbols.
+
+ ✅ Answer: Jesus said literally "This IS my body" (Matt 26:26). In John 6, He said "My flesh is true food" — and many disciples left because of this. He never corrected them by saying it was symbolic; if it were a symbol, He would have clarified.
+
+ 📖 Scripture: John 6:53-56 — "Unless you eat the flesh of the Son of Man... you have no life in you." 1 Cor 11:27-29 — "guilty of sinning against the body and blood of the Lord" — makes no sense if symbolic.
+
+ 📜 Tradition: Ignatius of Antioch (107 AD): "The Eucharist is the flesh of Christ." Justin Martyr (155 AD): "Not ordinary bread." Council of Trent (1551): transubstantiation formally defined.
+
+ 💬 Respond: "The Early Church 100% believed in the Real Presence — the symbolic interpretation is a 16th century invention of the Reformation."`,
+      ceb: `⚡ Hangyo: Simbolo lamang ang tinapay ug bino sa Komunyon.
+
+ ✅ Tubag: Si Hesus literal nga misulti "Kini MAO ang akong lawas" (Mat 26:26). Sa Juan 6, miingon siya "Ang akong unod tinuod nga pagkaon" — ug daghang mga disipulo mibiya tungod niini. Wala niya kini ipasabot nga simbolo.
+
+ 📖 Kasulatan: Juan 6:53-56 — "Kung dili ninyo kan-on ang unod sa Anak sa Tawo... wala ninyoy kinabuhi." 1 Cor 11:27-29 — "makasala batok sa lawas ug dugo sa Ginoo" — dili makasense kung simbolo ra.
+
+ 📜 Tradisyon/Kasaysayan: Ignatius of Antioch (107 AD): "Ang Eucharist mao ang unod ni Kristo." Justin Martyr (155 AD): "Dili ordinaryong tinapay." Council of Trent (1551): transubstantiation formally defined.
+
+ 💬 Tubag: "Ang Unang Simbahan 100% nagtuo sa Real Presence — ang symbolic interpretation invensyon lang sa ikaduhang tuig sa Repormasyon."`,
+    },
+  },
+  {
+    keywords: [
+      'immaculate conception','ic','maria walang sala','original sin ni maria',
+      'kecharitomene','full of grace','walang kasalanan si maria',
+    ],
+    answers: {
+      en: `⚡ Challenge: The Immaculate Conception is not in the Bible.
+
+ ✅ Answer: The IC means Mary was preserved from Original Sin from her conception. Luke 1:28 — "kecharitomene" (Greek perfect passive participle) = "perfectly and permanently graced" — she was already fully graced before the angel spoke. This points to a pre-existing, permanent state of grace.
+
+ 📖 Scripture: Luke 1:28 — "kecharitomene" (full of grace). Genesis 3:15 — enmity between the woman and the serpent. Isaiah 7:14 — the virgin. Luke 1:42 — "blessed are you among all women."
+
+ 📜 Tradition: Duns Scotus provided the theological framework. Pope Pius IX proclaimed it dogma (Ineffabilis Deus, 1854) after centuries of tradition.
+
+ 💬 Respond: "Mary as the Ark of the New Covenant (Heb 9:4 vs Luke 1:35) — the OT Ark was consecrated (Ex 40) — how much more the Ark of the New Covenant? Sinlessness is fitting for the one who carried God incarnate."`,
+      ceb: `⚡ Hangyo: Ang Immaculate Conception wala sa Bibliya.
+
+ ✅ Tubag: Ang IC nagpasabot nga si Maria walay Original Sin sukod sa iyang pagkasuka. Lucas 1:28 — "kecharitomene" (Greek perfect passive participle) = "perfectly and permanently graced" — nagpasabot nga ang grasya naano na kaniya sa bug-os sa wala pa mosulti ang anghel.
+
+ 📖 Kasulatan: Lucas 1:28 — "kecharitomene" (full of grace). Genesis 3:15 — kaaway sa "iyang pagtubo." Isaias 7:14 — ang birhen. Lucas 1:42 — "pinagpala ka sa tanan nga mga babaye."
+
+ 📜 Tradisyon/Kasaysayan: Duns Scotus naghatag og theological framework. Pius IX nagproklamar ingon dogma (Ineffabilis Deus, 1854) human sa daang tradisyon.
+
+ 💬 Tubag: "Si Maria ingon Ark of the New Covenant (Heb 9:4 vs Lk 1:35) — ang Ark sa OT nag-ayo-ayo (Ex 40) — pila ka labi pa ang Ark sa Bag-ong Tipan?"`,
+    },
+  },
+  {
+    keywords: [
+      'assumption of mary','assumption','gisakwat si maria','body of mary',
+      'body ni maria sa langit','where is marys body',
+    ],
+    answers: {
+      en: `⚡ Challenge: The Assumption of Mary is not in the Bible.
+
+ ✅ Answer: The Assumption means Mary was taken body and soul to Heaven — just like Enoch (Gen 5:24) and Elijah (2 Kings 2:11) in the OT. No relic of Mary's body has ever been found — unlike every other early martyr — which is itself historical evidence.
+
+ 📖 Scripture: Revelation 12:1 — "a woman clothed with the sun" in heaven. Genesis 5:24 — Enoch "was taken" by God. 2 Kings 2:11 — Elijah taken in a chariot.
+
+ 📜 Tradition: The Feast of the Assumption began in the 6th century. Pope Pius XII declared it dogma (Munificentissimus Deus, 1950). No relics of Mary have ever been venerated anywhere.
+
+ 💬 Respond: "God is not limited in His ability to preserve Mary from corruption — He did it for Enoch and Elijah. He who said the body is holy (1 Cor 6:19-20) could certainly do this."`,
+      ceb: `⚡ Hangyo: Ang Assumption ni Maria wala sa Bibliya.
+
+ ✅ Tubag: Ang Assumption nagpasabot nga si Maria gisakwat sa lawas ug kalag sa Langit — sama ni Enoc (Gen 5:24) ug Elias (2 Hari 2:11) sa OT. Wala nakit-an ang usa ka dakong relic ni Maria bisan asa — dili sama sa ubang mga maagang martyr.
+
+ 📖 Kasulatan: Pahayag 12:1 — "babaye nga ginasul-oban sa adlaw" sa langit. Gen 5:24 — si Enoc gisakwat sa Dios. 2 Hari 2:11 — si Elias sa karosa.
+
+ 📜 Tradisyon/Kasaysayan: Ang feast nagsugod sa 6th century. Pius XII nagproklamar ingon dogma (Munificentissimus Deus, 1950). Wala puy-ay na nakit-an ang relics ni Maria sa kasaysayan.
+
+ 💬 Tubag: "Dili kapugngan ang Dios sa pag-preserve sa lawas ni Maria gikan sa pagkalagom — Siya ang nagbuhat niini kang Enoc ug Elias."`,
+    },
+  },
+  {
+    keywords: [
+      'perpetual virginity','brothers of jesus','igsoon ni hesus',
+      'siblings of jesus','uban anak ni maria','did mary have other children',
+    ],
+    answers: {
+      en: `⚡ Challenge: Mary had other children after Jesus — the Bible mentions His brothers.
+
+ ✅ Answer: The "brothers of Jesus" (Matt 13:55) in Greek "adelphoi" — in Hebraic/Aramaic culture, this word was used for cousins or close relatives. "James, the brother of the Lord" (Gal 1:19) is also identified as the son of Alphaeus (Mark 3:18), a different father than Joseph.
+
+ 📖 Scripture: John 19:26-27 — Jesus entrusted Mary to John's care at the cross — not to His "brothers." If He had siblings, this makes no sense in Jewish culture.
+
+ 📜 Tradition: Origen, Jerome, and Augustine all supported the perpetual virginity. Jerome taught that "adelphoi" in the Gospels comes from the Aramaic "ahim" meaning cousins.
+
+ 💬 Respond: "If Mary had other sons, why did Jesus give her to John for care? (John 19:27) The universal Church for 1500 years held this doctrine before the Reformation."`,
+      ceb: `⚡ Hangyo: Si Maria adunay uban pang mga anak human ni Hesus.
+
+ ✅ Tubag: Ang "brothers of Jesus" sa Griyego "adelphoi" — sa Hebreyo/Aramaiko nga kultura, kini gigamit sa cousins o haduol nga pamilya. Si "Santiago, igsoon sa Ginoo" (Gal 1:19) anak ni Alpheus (Marcos 3:18) — lain nga amahan.
+
+ 📖 Kasulatan: Juan 19:26-27 — si Hesus mitrao kang Maria kang Juan alang sa pag-atiman — dili sa iyang "mga igsoon." Sa Jewish culture, dili kini makasense kung dunay igsoon.
+
+ 📜 Tradisyon/Kasaysayan: Origen, Jerome, Augustine nagsuporta sa perpetual virginity. Si Jerome nagtudlo nga "adelphoi" mahimong gikan sa Aramaic "ahim" = cousins.
+
+ 💬 Tubag: "Kung si Maria dunay uban pang anak, nganong gitrao man niya si Juan sa pagpangalaga? (Juan 19:27)"`,
+    },
+  },
+  {
+    keywords: [
+      'church fathers','amahan sa simbahan','early church','unang simbahan',
+      'ignatius antioch','justin martyr','clement rome','irenaeus','tertullian',
+      'origen','did early church believe','what did early christians believe',
+    ],
+    answers: {
+      en: `⚡ Challenge: The Church Fathers didn't support Catholic doctrines.
+
+ ✅ Answer: The Church Fathers (1st-5th centuries) actively taught Catholic practices: Real Presence in the Eucharist (Ignatius, 107 AD), primacy of Rome (Clement, ~96 AD), Purgatory (Tertullian, 200 AD), intercession of saints (Origen, 185 AD), apostolic succession (Irenaeus, 180 AD), confession (Origen), and the canon of Scripture.
+
+ 📖 Scripture: John 21:25 — "Jesus did many other things... the whole world would not have room for the books." The Tradition preserves what was not written.
+
+ 📜 Tradition: Ignatius of Antioch (107 AD): "Where Jesus Christ is, there is the Catholic Church." Justin Martyr (155 AD): described the Mass structure identically to today's Mass. The Didache (50-120 AD): taught the Eucharist and Baptism.
+
+ 💬 Respond: "If you want to know what the early Church believed, read the Church Fathers — you will find a Church that looks exactly like the Catholic Church."`,
+      ceb: `⚡ Hangyo: Wala nagsuporta ang mga Church Fathers sa Catholic doctrine.
+
+ ✅ Tubag: Ang mga Church Fathers aktibo nga nagtudlo sa mga Catholic practice: Real Presence (Ignatius 107 AD), primacy of Rome (Clement ~96 AD), purgatory (Tertullian 200 AD), intercession of saints (Origen 185 AD), apostolic succession (Irenaeus 180 AD).
+
+ 📖 Kasulatan: Juan 21:25 — "Daghan pang uban ang gihimo ni Hesus, dili makasulod sa mga libro."
+
+ 📜 Tradisyon/Kasaysayan: Ignatius of Antioch (107 AD): "Bisan diin si Hesus Kristo, didto ang Catholic Church." Justin Martyr (155 AD): naglista sa Mass structure. Didache (50-120 AD): nagtudlo sa Eucharist.
+
+ 💬 Tubag: "Kung gusto kang mahibalo unsa ang gipatuohan sa Unang Simbahan — basaha ang Church Fathers."`,
+    },
+  },
+  {
+    keywords: [
+      'trinity','trinidad','three persons in one god','tatlong persona',
+      'is trinity in bible','trinity not biblical','father son holy spirit one god',
+    ],
+    answers: {
+      en: `⚡ Challenge: The Trinity is not in the Bible.
+
+ ✅ Answer: The word "Trinity" is not in the Bible — just like "Rapture," "Bible," and "Incarnation" aren't. But the concept is clear: God the Father, God the Son, God the Holy Spirit — distinct but One (Matt 28:19, John 1:1, Acts 5:3-4). The Trinity is the best framework to explain all Scripture's teachings about God.
+
+ 📖 Scripture: Matt 28:19 — "in the name (singular) of the Father, Son, and Holy Spirit." John 1:1 — "the Word was God." Acts 5:3-4 — lying to the Holy Spirit = lying to God.
+
+ 📜 Tradition: Council of Nicaea (325 AD): formalized Trinity doctrine against Arianism. Council of Constantinople (381 AD): defined the divinity of the Holy Spirit. Tertullian (220 AD) first used "Trinitas."
+
+ 💬 Respond: "Remove any one Person and you contradict multiple Scripture passages. The Trinity is not a contradiction — it is the fullest explanation of who God is as revealed in Scripture."`,
+      ceb: `⚡ Hangyo: Ang Trinidad wala sa Bibliya.
+
+ ✅ Tubag: Ang pulong "Trinidad" wala sa Bibliya — sama sa "Rapture," "Bibliya," o "Incarnation." Apan ang konsepto klaro: Dios Amahan, Dios Anak, Dios Espiritu Santo — lahi pero usa (Mat 28:19, Juan 1:1, Gawa 5:3-4).
+
+ 📖 Kasulatan: Mat 28:19 — "sa ngalan (singular) sa Amahan, Anak, ug Espiritu Santo." Juan 1:1 — "ang Pulong Dios." Gawa 5:3-4 — ang pagbudhig sa Espiritu = pagbudhig sa Dios.
+
+ 📜 Tradisyon/Kasaysayan: Council of Nicaea (325 AD): formalized ang Trinity doctrine batok sa Arianism. Tertullian (220 AD) unang mogamit sa "Trinitas."
+
+ 💬 Tubag: "Ang Trinitarian theology ang pinaka-kompletong pagsabut sa tanang scripture bahin sa Dios."`,
+    },
+  },
+  {
+    keywords: [
+      'born again','bautismo','infant baptism','baby baptism','baptism saves',
+      'binyag sa bata','pahinulog','binyag makaluwas','water baptism',
+    ],
+    answers: {
+      en: `⚡ Challenge: You must be "born again" as an adult — infant baptism is wrong.
+
+ ✅ Answer: "Born again" (John 3:5) means "of water and the Spirit" — Jesus was pointing to Baptism. Catholics ARE born again in Baptism. Infant baptism has Scripture support: Baptism replaced circumcision (Col 2:11-12), and whole households were baptized (Acts 16:33).
+
+ 📖 Scripture: John 3:5 — "born of water and the Spirit." Titus 3:5 — "saved through the washing of regeneration." 1 Peter 3:21 — "Baptism now saves you." Col 2:11-12 — Baptism replaced circumcision.
+
+ 📜 Tradition: Justin Martyr (155 AD): described Baptism as regeneration. Didache (100 AD): detailed Baptism instructions. Origen: taught infant baptism as apostolic tradition.
+
+ 💬 Respond: "Being born again is Baptism — not an emotional experience. Catholics ARE baptized. The question is not whether you need to be born again, but whether adult-only rebaptism is biblical."`,
+      ceb: `⚡ Hangyo: Kinahanglan ka magpabunyag pag-usab (born again) aron maluwas.
+
+ ✅ Tubag: Ang "born again" (Juan 3:5) nagpasabot sa tubig ug Espiritu — nagpunta si Hesus sa Binyag. Ang mga Katoliko "born again" sa Binyag. Ang infant baptism adunay suporta: ang Binyag nagpuli sa circumcision (Col 2:11-12).
+
+ 📖 Kasulatan: Juan 3:5 — "isanong pinaagi sa tubig ug Espiritu." Tito 3:5 — "naluwas pinaagi sa hugasan sa pagbabag-o." 1 Pedro 3:21 — "ang Binyag nagaluwas kaninyo."
+
+ 📜 Tradisyon/Kasaysayan: Justin Martyr (155 AD): naghubit sa Binyag ingon regeneration. Didache (100 AD): detailed Baptism instructions.
+
+ 💬 Tubag: "Ang born again kinahanglan sa Binyag — ug ang mga Katoliko gibunyagan."`,
+    },
+  },
+  {
+    keywords: [
+      'inquisition','crusades','krusada','inquisicion','torture church',
+      'church killed people','did church kill','burned at stake',
+    ],
+    answers: {
+      en: `⚡ Challenge: The Inquisition and Crusades prove the Catholic Church is evil.
+
+ ✅ Answer: The Inquisition is very different from how it is portrayed: 1) The Spanish Inquisition was controlled by the Spanish Crown, not the Pope. 2) Most verdicts resulted in penance — not death. 3) Vatican historical records: ~3,000 executions over 350 years — not the millions claimed in popular culture.
+
+ 📖 Scripture: Matt 13:24-30 — the weeds and wheat grow together until the end. The sins of members don't disprove the truth of the Church.
+
+ 📜 Tradition: Pope John Paul II (2000) apologized for historical errors. The Crusades (1095-1291) were a defensive response to Islamic expansion into Christian lands — the first was called by the Byzantine Emperor's request.
+
+ 💬 Respond: "The sins of members — even popes and bishops — don't disprove Catholic doctrine. Judas's betrayal didn't disprove Jesus. The Church is holy in her doctrine and sacraments, not because all her members are perfect."`,
+      ceb: `⚡ Hangyo: Ang Inquisition ug Crusades nagpakita nga dautan ang Catholic Church.
+
+ ✅ Tubag: Ang Inquisition lahi sa gihulagway: 1) Ang Spanish Inquisition kontrolado sa Spanish Crown, dili sa Papa. 2) Kadaghanan sa hatol nagresulta sa penance — dili kamatayon. 3) ~3,000 kamatayon sa 350 ka tuig — dili milyon.
+
+ 📖 Kasulatan: Mat 13:24-30 — ang tanum-tanum ug trigo magkauban hangtod sa katapusan.
+
+ 📜 Tradisyon/Kasaysayan: Pope John Paul II (2000) naghinulsol alang sa mga kasayupan. Ang Crusades (1095-1291) usa ka defensive response sa Islamic expansion.
+
+ 💬 Tubag: "Ang mga sala sa mga miyembro dili nagpapatuod nga sayop ang Catholic doctrine — sama sa pagbudhig ni Judas dili nagpapatuod nga sayop si Hesus."`,
+    },
+  },
+  {
+    keywords: [
+      'evolution','science catholic','galileo','big bang','church anti science',
+      'does church believe in science','catholics science',
+    ],
+    answers: {
+      en: `⚡ Challenge: The Catholic Church is anti-science (Galileo, Evolution).
+
+ ✅ Answer: The Catholic Church actively supports science. Pope Pius XII (Humani Generis, 1950): theistic evolution is not contrary to faith. Pope John Paul II: evolution is "more than a hypothesis." Fr. Georges Lemaître, a Catholic priest, proposed the Big Bang Theory.
+
+ 📖 Scripture: Genesis 1-2 — poetic/theological language, not literal scientific text. John 1:3 — "through him all things were made."
+
+ 📜 Tradition: The Vatican Observatory is one of the oldest astronomical institutions. Pope John Paul II (1992) acknowledged errors in the Galileo case. The Galileo affair was a political/personality conflict, not a doctrinal rejection of science.
+
+ 💬 Respond: "The Catholic Church established the first universities in Europe and has the longest intellectual tradition in Christianity. Science and faith are not enemies — they are both searches for truth."`,
+      ceb: `⚡ Hangyo: Ang Catholic Church kontra sa siyensiya (Galileo, Evolution).
+
+ ✅ Tubag: Ang Catholic Church nagsuporta sa siyensiya. Pope Pius XII (Humani Generis, 1950): ang theistic evolution dili kontra sa pagtuo. Si Fr. Georges Lemaître (Catholic priest) ang nagpropose sa Big Bang Theory.
+
+ 📖 Kasulatan: Genesis 1-2 — poetic/theological language, dili literal scientific text.
+
+ 📜 Tradisyon/Kasaysayan: Ang Vatican Observatory usa sa labing daan nga astronomical institutions. John Paul II (1992) naghinulsol alang sa Galileo case.
+
+ 💬 Tubag: "Ang Catholic Church mao ang nag-establish sa unang mga unibersidad sa Europe."`,
+    },
+  },
+
+// ── BIBLE VERSE SEARCH ──────────────────────────────────────────────────────
+const BIBLE_BOOK_MAP = {
+  // Cebuano / Filipino / Spanish → English (for bible-api.com)
+  'juan':'john','jn':'john','mateo':'matthew','mat':'matthew','mt':'matthew',
+  'marcos':'mark','mc':'mark','mk':'mark','lucas':'luke','lk':'luke',
+  'mga gawa':'acts','gawa':'acts','mga romano':'romans','rom':'romans',
+  'galacia':'galatians','gal':'galatians','efeso':'ephesians','ef':'ephesians',
+  'filipos':'philippians','fil':'philippians','colosas':'colossians','col':'colossians',
+  'hebreo':'hebrews','heb':'hebrews','santiago':'james','jas':'james',
+  'pahayag':'revelation','rev':'revelation','apoc':'revelation',
+  'genesis':'genesis','gen':'genesis','exodo':'exodus','ex':'exodus',
+  'levitico':'leviticus','lev':'leviticus','numero':'numbers','num':'numbers',
+  'deuteronomio':'deuteronomy','deut':'deuteronomy','josue':'joshua','jos':'joshua',
+  'mga salmo':'psalms','salmo':'psalms','sal':'psalms','ps':'psalms',
+  'mga kawikaan':'proverbs','kawikaan':'proverbs','kaw':'proverbs','prov':'proverbs',
+  'isaias':'isaiah','is':'isaiah','jeremias':'jeremiah','jer':'jeremiah',
+  'ezekiel':'ezekiel','ez':'ezekiel','daniel':'daniel','dan':'daniel',
+  'oseas':'hosea','hos':'hosea','joel':'joel','amos':'amos',
+  'jonas':'jonah','jon':'jonah','miqueas':'micah','mic':'micah',
+  'nahum':'nahum','nah':'nahum','habacuc':'habakkuk','hab':'habakkuk',
+  'sofonias':'zephaniah','zep':'zephaniah','hageo':'haggai','hag':'haggai',
+  'zacarias':'zechariah','zec':'zechariah','malaquias':'malachi','mal':'malachi',
+  'rut':'ruth','ruth':'ruth','nehemias':'nehemiah','neh':'nehemiah','esdras':'ezra',
+  'eclesiastes':'ecclesiastes','eccl':'ecclesiastes',
+  'sirac':'sirach','eclesiastico':'sirach','sir':'sirach',
+  'karaan':'wisdom','wis':'wisdom','judit':'judith','tobias':'tobit','tob':'tobit',
+  'baruc':'baruch','bar':'baruch',
+  '1 corinto':'1+corinthians','1cor':'1+corinthians','1 cor':'1+corinthians',
+  '2 corinto':'2+corinthians','2cor':'2+corinthians',
+  '1 pedro':'1+peter','1 ped':'1+peter','1pet':'1+peter',
+  '2 pedro':'2+peter','2 ped':'2+peter','2pet':'2+peter',
+  '1 juan':'1+john','1jn':'1+john','2 juan':'2+john','2jn':'2+john',
+  '3 juan':'3+john','3jn':'3+john',
+  '1 timoteo':'1+timothy','1tim':'1+timothy','2 timoteo':'2+timothy','2tim':'2+timothy',
+  '1 tesalonica':'1+thessalonians','1tes':'1+thessalonians',
+  '2 tesalonica':'2+thessalonians','2tes':'2+thessalonians',
+  '1 samuel':'1+samuel','1sam':'1+samuel','2 samuel':'2+samuel','2sam':'2+samuel',
+  '1 hari':'1+kings','2 hari':'2+kings',
+  '1 cronica':'1+chronicles','2 cronica':'2+chronicles',
+  '1 macabeo':'1+maccabees','1mac':'1+maccabees',
+  '2 macabeo':'2+maccabees','2mac':'2+maccabees',
+  'tito':'titus','tit':'titus','filemon':'philemon','phm':'philemon',
+  'judas':'jude','jude':'jude','lamentaciones':'lamentations','lam':'lamentations',
+  'abdias':'obadiah','ob':'obadiah','cantar':'song+of+solomon',
+  // English direct
+  'john':'john','matthew':'matthew','mark':'mark','luke':'luke','acts':'acts',
+  'romans':'romans','james':'james','revelation':'revelation','genesis':'genesis',
+  'exodus':'exodus','leviticus':'leviticus','numbers':'numbers','deuteronomy':'deuteronomy',
+  'joshua':'joshua','judges':'judges','psalms':'psalms','psalm':'psalms',
+  'proverbs':'proverbs','isaiah':'isaiah','jeremiah':'jeremiah','daniel':'daniel',
+  'hebrews':'hebrews','galatians':'galatians','ephesians':'ephesians',
+  'philippians':'philippians','colossians':'colossians',
+  'wisdom':'wisdom','judith':'judith','tobit':'tobit','baruch':'baruch','sirach':'sirach',
+}
+
+/**
+ * Detects if a query is a Bible verse reference.
+ * Returns { book, englishBook, chapter, verse } or null.
+ */
+export function detectBibleVerse(text) {
+  const t = text.trim().toLowerCase()
+  const patterns = [
+    /^(ds+[a-záéíóúüñ]+(?:s+[a-záéíóúüñ]+)*)s+(d+):(d+(?:-d+)?)$/i,
+    /^([a-záéíóúüñ]+(?:s+[a-záéíóúüñ]+)*)s+(d+):(d+(?:-d+)?)$/i,
+    /^(ds+[a-záéíóúüñ]+(?:s+[a-záéíóúüñ]+)*)s+(d+)$/i,
+    /^([a-záéíóúüñ]+(?:s+[a-záéíóúüñ]+)*)s+(d+)$/i,
+  ]
+  for (const pattern of patterns) {
+    const match = t.match(pattern)
+    if (match) {
+      const bookName = match[1].trim()
+      const chapter = match[2]
+      const verse = match[3] || null
+      const englishBook = BIBLE_BOOK_MAP[bookName]
+      if (englishBook) return { book: bookName, englishBook, chapter, verse, original: text.trim() }
+      const partialKey = Object.keys(BIBLE_BOOK_MAP).find(k => k === bookName || bookName.startsWith(k) || k.startsWith(bookName))
+      if (partialKey) return { book: bookName, englishBook: BIBLE_BOOK_MAP[partialKey], chapter, verse, original: text.trim() }
+    }
+  }
+  return null
+}
+
+/**
+ * Fetches a Bible verse from bible-api.com (free, no key required).
+ * Returns formatted response string or null on error.
+ */
+export async function fetchBibleVerse(verseInfo, langCode) {
+  const { englishBook, chapter, verse, original } = verseInfo
+  const encodedBook = englishBook.replace(/\+/g, '%20')
+  let ref = encodedBook + '%20' + chapter
+  if (verse) ref += ':' + verse
+  try {
+    const r = await fetch(`https://bible-api.com/${ref}?translation=web`)
+    if (!r.ok) throw new Error('HTTP ' + r.status)
+    const d = await r.json()
+    if (d.error) throw new Error(d.error)
+    const isCeb = ['ceb','fil','tl','ilo','hil','war','bik','kpm','tsg'].includes(langCode)
+    const note = isCeb ? '🔍 I-type ang laing bersikulo para magpadayon.' : '🔍 Type another verse to continue.'
+    return `📖 ${d.reference} (${d.translation_name || 'World English Bible'})\n\n"${d.text.trim()}"\n\n${note}`
+  } catch (e) {
+    return null
+  }
+}
+
+
 export function findOfflineAnswer(query, langCode) {
   if (!query) return null
   const q = query.toLowerCase()
