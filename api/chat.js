@@ -4,17 +4,20 @@
  * Optional "AI mode" for questions the built-in library does not cover.
  * The browser sends the question, recent history, the chosen language and the
  * closest library entries; this function builds a grounded prompt and calls
- * Google Gemini. Your API key never reaches the browser.
+ * Claude (preferred) or Google Gemini. API keys never reach the browser.
  *
  * Environment variables (Vercel → Project → Settings → Environment Variables):
- *   GEMINI_API_KEY   required to enable AI mode (free key: https://aistudio.google.com/app/apikey)
- *   GEMINI_MODEL     optional, defaults to gemini-2.5-flash
+ *   ANTHROPIC_API_KEY  use Claude (https://platform.claude.com/settings/keys)
+ *   CLAUDE_MODEL       optional, defaults to claude-opus-5-5
+ *   GEMINI_API_KEY     used only when ANTHROPIC_API_KEY is not set (free key: https://aistudio.google.com/app/apikey)
+ *   GEMINI_MODEL       optional, defaults to gemini-2.5-flash
  *
- * Without GEMINI_API_KEY the app still works fully from its built-in library.
+ * Without either key the app still works fully from its built-in library.
  */
+import Anthropic from '@anthropic-ai/sdk'
 
-const MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash'
-const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`
+const CLAUDE_MODEL = process.env.CLAUDE_MODEL || 'claude-opus-5-5'
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash'
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
@@ -48,28 +51,96 @@ function clip(s, n) {
   return s.length > n ? s.slice(0, n) : s
 }
 
-async function callGemini(apiKey, body, maxRetries = 2) {
+// ── Claude ──────────────────────────────────────────────────────────────────
+
+async function askClaude({ system, turns, prompt }) {
+  const client = new Anthropic() // reads ANTHROPIC_API_KEY
+  const messages = [
+    ...turns.map(t => ({ role: t.role, content: t.text })),
+    { role: 'user', content: prompt },
+  ]
+  const params = {
+    model: CLAUDE_MODEL,
+    max_tokens: 16000,
+    system,
+    messages,
+    output_config: { effort: 'medium' },
+  }
+  // If a safety classifier declines, let the API retry on Anthropic's recommended
+  // fallback model. Haiku has no server-side fallback.
+  if (!CLAUDE_MODEL.includes('haiku')) {
+    params.betas = ['server-side-fallback-2026-07-01']
+    params.fallbacks = 'default'
+  }
+
+  try {
+    const msg = await client.beta.messages.create(params)
+    if (msg.stop_reason === 'refusal') {
+      return { ok: false, status: 422, error: 'The AI could not answer that question. Please rephrase it.' }
+    }
+    const text = msg.content.filter(b => b.type === 'text').map(b => b.text).join('').trim()
+    return text ? { ok: true, text, model: msg.model } : { ok: false, status: 502, error: 'The AI returned no answer. Please try again.' }
+  } catch (err) {
+    if (err instanceof Anthropic.RateLimitError) {
+      return { ok: false, status: 429, error: 'The AI is busy right now. Please wait a moment and try again.' }
+    } else if (err instanceof Anthropic.AuthenticationError || err instanceof Anthropic.PermissionDeniedError) {
+      return { ok: false, status: 403, error: 'AI key error. Check ANTHROPIC_API_KEY in your Vercel settings.' }
+    } else if (err instanceof Anthropic.BadRequestError) {
+      console.error('Claude bad request:', err.message)
+      return { ok: false, status: 400, error: 'The AI could not process that question. Please rephrase it.' }
+    } else if (err instanceof Anthropic.APIError) {
+      console.error(`Claude API error ${err.status}:`, err.message)
+      return { ok: false, status: 502, error: 'The AI service had a problem. Please try again.' }
+    }
+    throw err
+  }
+}
+
+// ── Gemini ──────────────────────────────────────────────────────────────────
+
+async function askGemini({ system, turns, prompt }) {
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`
+  const body = {
+    system_instruction: { parts: [{ text: system }] },
+    contents: [
+      ...turns.map(t => ({ role: t.role === 'assistant' ? 'model' : 'user', parts: [{ text: t.text }] })),
+      { role: 'user', parts: [{ text: prompt }] },
+    ],
+    generationConfig: { maxOutputTokens: 4096, temperature: 0.4 },
+  }
+
   for (let attempt = 0; ; attempt++) {
-    const upstream = await fetch(ENDPOINT, {
+    const upstream = await fetch(endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
+      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': process.env.GEMINI_API_KEY },
       body: JSON.stringify(body),
     })
     const data = await upstream.json().catch(() => ({}))
-    if (upstream.ok) return { ok: true, data }
-    if ((upstream.status === 429 || upstream.status === 503) && attempt < maxRetries) {
+    if (upstream.ok) {
+      const text = (data?.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim()
+      return text ? { ok: true, text, model: GEMINI_MODEL } : { ok: false, status: 502, error: 'The AI returned no answer. Please try again.' }
+    }
+    if ((upstream.status === 429 || upstream.status === 503) && attempt < 2) {
       await sleep(Math.min(2 ** attempt * 1500, 6000))
       continue
     }
-    return { ok: false, status: upstream.status, data }
+    const status = upstream.status
+    const error =
+      status === 429 ? 'The AI is busy right now. Please wait a moment and try again.'
+      : status === 400 ? 'The AI could not process that question. Please rephrase it.'
+      : status === 403 ? 'AI key error. Check GEMINI_API_KEY in your Vercel settings.'
+      : 'The AI service had a problem. Please try again.'
+    return { ok: false, status: status || 502, error }
   }
 }
+
+// ── Handler ─────────────────────────────────────────────────────────────────
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
-  const apiKey = process.env.GEMINI_API_KEY
-  if (!apiKey) return res.status(503).json({ error: 'AI mode is not configured.', code: 'no_key' })
+  const provider = process.env.ANTHROPIC_API_KEY ? 'claude' : process.env.GEMINI_API_KEY ? 'gemini' : null
+  if (!provider) return res.status(503).json({ error: 'AI mode is not configured.', code: 'no_key' })
 
   const { question, history, language, context } = req.body || {}
   const q = clip(question, 2000).trim()
@@ -77,39 +148,23 @@ export default async function handler(req, res) {
 
   const turns = (Array.isArray(history) ? history : [])
     .slice(-6)
-    .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
-    .map(m => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: [{ text: clip(m.content, 3000) }] }))
-  // Gemini requires the conversation to start with a user turn.
+    .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string' && m.content.trim())
+    .map(m => ({ role: m.role, text: clip(m.content, 3000) }))
+  // Conversations must start with a user turn.
   while (turns.length && turns[0].role !== 'user') turns.shift()
 
   const notes = clip(context, 14000)
   const prompt = notes
     ? `REFERENCE NOTES (from the Catholic Shield library — use and cite these where relevant):\n${notes}\n\n---\nQUESTION: ${q}`
     : `QUESTION: ${q}`
-
-  const body = {
-    system_instruction: { parts: [{ text: systemPrompt(clip(language, 60) || 'English') }] },
-    contents: [...turns, { role: 'user', parts: [{ text: prompt }] }],
-    generationConfig: { maxOutputTokens: 4096, temperature: 0.4 },
-  }
+  const system = systemPrompt(clip(language, 60) || 'English')
 
   try {
-    const result = await callGemini(apiKey, body)
-    if (!result.ok) {
-      const status = result.status
-      const error =
-        status === 429 ? 'The AI is busy right now. Please wait a moment and try again.'
-        : status === 400 ? 'The AI could not process that question. Please rephrase it.'
-        : status === 403 ? 'AI key error. Check GEMINI_API_KEY in your Vercel settings.'
-        : 'The AI service had a problem. Please try again.'
-      return res.status(status || 502).json({ error })
-    }
-    const text = (result.data?.candidates?.[0]?.content?.parts || [])
-      .map(p => p.text || '')
-      .join('')
-      .trim()
-    if (!text) return res.status(502).json({ error: 'The AI returned no answer. Please try again.' })
-    return res.status(200).json({ text, model: MODEL })
+    const result = provider === 'claude'
+      ? await askClaude({ system, turns, prompt })
+      : await askGemini({ system, turns, prompt })
+    if (!result.ok) return res.status(result.status).json({ error: result.error })
+    return res.status(200).json({ text: result.text, model: result.model })
   } catch (error) {
     console.error('AI proxy error:', error)
     return res.status(500).json({ error: 'Internal server error. Please try again.' })

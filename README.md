@@ -15,7 +15,7 @@ A faith-defense guide that helps Catholics answer common questions and objection
 - **Smart search** that understands phrasing in English, Filipino, Cebuano and Spanish. It only answers directly when it is confident. Otherwise it suggests the closest topics.
 - **Copy / Share** an answer with its references (for Messenger, etc.).
 - **Multilingual**: 20 interface languages. 22 core answers are translated into Filipino, Cebuano, Spanish and more, with the full English references one tap away.
-- **Optional AI mode** for anything not in the library. Answers are grounded in the closest library entries and must cite Scripture, the Catechism and the Fathers.
+- **Optional AI mode (Claude or Gemini)** for anything not in the library. Answers are grounded in the closest library entries and must cite Scripture, the Catechism and the Fathers.
 
 ## Run locally
 
@@ -26,14 +26,20 @@ npm run dev
 
 Open http://localhost:5173. The library and Bible lookup work immediately. AI mode needs the Vercel function, so use `npx vercel dev` to test it locally.
 
-## AI mode (optional, free)
+## AI mode (optional)
 
-1. Get a free Gemini API key at https://aistudio.google.com/app/apikey
-2. In Vercel → Project → Settings → Environment Variables, add `GEMINI_API_KEY`.
-3. Optionally set `GEMINI_MODEL` (default `gemini-2.5-flash`).
-4. Redeploy.
+AI mode answers questions the library doesn't cover. It uses **Claude** if `ANTHROPIC_API_KEY` is set. Otherwise it uses **Gemini** if `GEMINI_API_KEY` is set. With no key, the app runs from the library alone and the AI buttons hide themselves.
 
-Without a key, the app stays fully functional from the library, and the AI buttons hide themselves.
+Set the variables in Vercel → Project → Settings → Environment Variables, then redeploy:
+
+| Variable | Purpose |
+|---|---|
+| `ANTHROPIC_API_KEY` | Your Claude API key (https://platform.claude.com/settings/keys). Paid per use. |
+| `CLAUDE_MODEL` | Optional. Default `claude-opus-5-5`. Set `claude-sonnet-5-5` or `claude-haiku-5-5` for lower cost. |
+| `GEMINI_API_KEY` | Free-tier alternative (https://aistudio.google.com/app/apikey). Used only when no Claude key is set. |
+| `GEMINI_MODEL` | Optional. Default `gemini-2.5-flash`. |
+
+Library answers never call the AI, so they cost nothing.
 
 ## Adding or editing answers
 
@@ -61,7 +67,7 @@ Search keywords should be phrases people actually type. Add Filipino and Cebuano
 ## Project layout
 
 ```
-api/chat.js                 Vercel function: optional grounded AI answers (Gemini)
+api/chat.js                 Vercel function: optional grounded AI answers (Claude or Gemini)
 src/data/kb/                The answer library
 src/data/knowledgeBase.js   Search engine, links, plain-text export
 src/data/offlineAnswers.js  Translated answers + Bible verse lookup (bible-api.com)
