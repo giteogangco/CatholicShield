@@ -1,112 +1,80 @@
-import { useState, useEffect } from 'react'
-import { findOfflineAnswer } from '../data/offlineAnswers'
+# ✝ Catholic Shield
 
-// ── System prompt for Gemini online mode ──────────────────────
-const buildSystemPrompt = (language) =>
-  `You are a learned Catholic apologist and scholar — warm, confident, and grounded in Scripture, Sacred Tradition, and the Magisterium. Your role is to help ordinary Catholics defend their faith with charity and clarity.
+A faith-defense guide that helps Catholics answer common questions and objections about the Catholic faith with charity and with sources. It works offline from a built-in library, and can optionally use AI for questions the library doesn't cover.
 
-CRITICAL INSTRUCTION: You MUST respond ENTIRELY in ${language.name} (${language.localName}). Every single word of your response must be in ${language.name}. Do not mix in English or any other language unless quoting a Bible verse reference number (e.g. John 3:16).
+## What it does
 
-When someone presents an attack or challenge to the Catholic faith:
-1. ACKNOWLEDGE the concern with respect — never be dismissive
-2. Give a CLEAR, DIRECT answer in simple everyday language (no jargon)
-3. Cite SCRIPTURE (book chapter:verse)
-4. Cite EARLY CHURCH FATHERS or COUNCIL DOCUMENTS when relevant
-5. Address the MISUNDERSTANDING charitably
-6. End with a SHORT reminder to respond with love and peace
+- **82 researched answers** across 12 categories: Bible, Tradition, Mary & the Saints, the Pope, Sacraments, Salvation, Purgatory, God & the Trinity, Morality, Church History, Devotions, and other groups' claims (Iglesia ni Cristo, Jehovah's Witnesses, Sabbatarians…).
+- **Every answer cites its sources:**
+  - 📖 **Scripture.** Tap a verse to read it in the app, or ↗ to open it on Bible Gateway (RSV-CE).
+  - 📘 **Catechism** paragraph numbers, linked to the full text.
+  - 📜 **Church Fathers** with work and date. Verbatim quotes appear in quotation marks; paraphrases are marked "Summary".
+  - ⛪ **Church documents** (councils, encyclicals), linked to vatican.va where available.
+  - 💬 **How to respond**: a short, charitable line to use in a real conversation.
+- **Library** to browse by category or search all answers.
+- **Smart search** that understands phrasing in English, Filipino, Cebuano and Spanish. It only answers directly when it is confident. Otherwise it suggests the closest topics.
+- **Copy / Share** an answer with its references (for Messenger, etc.).
+- **Multilingual**: 20 interface languages. 22 core answers are translated into Filipino, Cebuano, Spanish and more, with the full English references one tap away.
+- **Optional AI mode** for anything not in the library. Answers are grounded in the closest library entries and must cite Scripture, the Catechism and the Fathers.
 
-Format your response using these exact emoji markers (translate the section labels into ${language.name}):
-⚡ [CHALLENGE label in ${language.name}]: restate the challenge briefly
-✅ [ANSWER label in ${language.name}]: clear direct answer
-📖 [SCRIPTURE label in ${language.name}]: Bible verses with references
-📜 [TRADITION label in ${language.name}]: Early Church, Councils, Saints
-💬 [RESPOND label in ${language.name}]: a gentle, practical suggestion for the conversation
+## Run locally
 
-Keep responses practical — this is for a regular Catholic in a real conversation, not a theology lecture.
-Be concise but complete. Use a confident, warm, pastoral tone.
-ALL TEXT MUST BE IN ${language.name}.`
+```bash
+npm install
+npm run dev
+```
 
-// Convert message history to Gemini format
-function toGeminiMessages(messages) {
-  return messages.map(m => ({
-    role: m.role === 'assistant' ? 'model' : 'user',
-    parts: [{ text: m.content }],
-  }))
+Open http://localhost:5173. The library and Bible lookup work immediately. AI mode needs the Vercel function, so use `npx vercel dev` to test it locally.
+
+## AI mode (optional, free)
+
+1. Get a free Gemini API key at https://aistudio.google.com/app/apikey
+2. In Vercel → Project → Settings → Environment Variables, add `GEMINI_API_KEY`.
+3. Optionally set `GEMINI_MODEL` (default `gemini-2.5-flash`).
+4. Redeploy.
+
+Without a key, the app stays fully functional from the library, and the AI buttons hide themselves.
+
+## Adding or editing answers
+
+Answers live in `src/data/kb/*.js`, one file per area. Each entry looks like this:
+
+```js
+{
+  id: 'real-presence',            // unique slug
+  cat: 'sacraments',              // category id from src/data/topics.js
+  q: 'The challenge, as people say it',
+  kw: ['search phrases', 'any language'],
+  a: `The answer. Blank lines separate paragraphs.`,
+  bible: [['John 6:51-58', 'what it shows']],
+  ccc: [1374, 1376],
+  fathers: [['St. Ignatius of Antioch', 'Letter to the Smyrnaeans 7 (c. 107 AD)', 'Summary: …']],
+  docs: [['Council of Trent, Session XIII (1551)', 'detail', 'optional url']],
+  say: '"A gentle line for the conversation."',
+  rel: ['mass-sacrifice'],        // related entry ids
+  legacy: 'real presence',        // optional: links to a translated answer in offlineAnswers.js
 }
+```
 
-// ── Network check ──────────────────────────────────────────────
-export function useOnlineStatus() {
-  const [isOnline, setIsOnline] = useState(navigator.onLine)
-  useEffect(() => {
-    const on  = () => setIsOnline(true)
-    const off = () => setIsOnline(false)
-    window.addEventListener('online',  on)
-    window.addEventListener('offline', off)
-    return () => { window.removeEventListener('online', on); window.removeEventListener('offline', off) }
-  }, [])
-  return isOnline
-}
+Search keywords should be phrases people actually type. Add Filipino and Cebuano phrasings too.
 
-// ── Main chat hook ─────────────────────────────────────────────
-export function useChat(lang) {
-  const [messages, setMessages] = useState([])
-  const [loading, setLoading]   = useState(false)
-  const isOnline = useOnlineStatus()
+## Project layout
 
-  const sendMessage = async (userMsg) => {
-    if (!userMsg.trim() || !lang) return
-    const newMsgs = [...messages, { role: 'user', content: userMsg }]
-    setMessages(newMsgs)
-    setLoading(true)
+```
+api/chat.js                 Vercel function: optional grounded AI answers (Gemini)
+src/data/kb/                The answer library
+src/data/knowledgeBase.js   Search engine, links, plain-text export
+src/data/offlineAnswers.js  Translated answers + Bible verse lookup (bible-api.com)
+src/hooks/useChat.js        Verse lookup → library → AI → suggestions
+src/components/             Screens: Language, Home, Library, Chat, AnswerCard
+```
 
-    // ── OFFLINE: use built-in knowledge base ──────────────────
-    if (!isOnline) {
-      await new Promise(r => setTimeout(r, 600)) // natural feel
-      const offlineReply = findOfflineAnswer(userMsg, lang.code)
-      const reply = offlineReply ||
-        (lang.code === 'fil'
-          ? '📵 Offline mode: Walang nahanap na sagot para sa tanong na ito. Subukan ang isa pang paraan ng pagtatanong, o kumonekta sa internet para sa kumpletong AI na tugon.'
-          : '📵 Offline mode: No matching answer found for that question. Try rephrasing, or go online for a full AI response.')
-      setMessages([...newMsgs, { role: 'assistant', content: reply }])
-      setLoading(false)
-      return
-    }
+> The loose files in the repository root (e.g. `App.jsx`, `topics.js`, `download`) are old copies and are not used by the build.
 
-    // ── ONLINE: call Gemini API ────────────────────────────────
-    try {
-      const endpoint = import.meta.env.PROD
-        ? '/api/chat'
-        : '/gemini-proxy/v1beta/models/gemini-1.5-flash:generateContent'
+## Deploy
 
-      const headers = { 'Content-Type': 'application/json' }
-      if (!import.meta.env.PROD) {
-        headers['x-gemini-key'] = import.meta.env.VITE_GEMINI_API_KEY
-      }
+Push to the GitHub repo connected to Vercel (`catholic-shield.vercel.app`). Vercel builds with `vite build` automatically.
 
-      const body = {
-        system_instruction: { parts: [{ text: buildSystemPrompt(lang) }] },
-        contents: toGeminiMessages(newMsgs),
-        generationConfig: { maxOutputTokens: 1200, temperature: 0.7 },
-      }
+---
 
-      const res  = await fetch(endpoint, { method: 'POST', headers, body: JSON.stringify(body) })
-      const data = await res.json()
-      const reply =
-        data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-        data?.error?.message ||
-        'Error generating response. Please try again.'
-      setMessages([...newMsgs, { role: 'assistant', content: reply }])
-    } catch {
-      // If Gemini fails, fall back to offline knowledge base
-      const offlineReply = findOfflineAnswer(userMsg, lang.code)
-      const reply = offlineReply ||
-        'Connection error. Please check your internet and try again.'
-      setMessages([...newMsgs, { role: 'assistant', content: reply }])
-    }
-    setLoading(false)
-  }
-
-  const clearMessages = () => setMessages([])
-
-  return { messages, loading, sendMessage, clearMessages, isOnline }
-}
+*"Always be prepared to make a defense to anyone who asks you for a reason for the hope that is in you; yet do it with gentleness and reverence."* — 1 Peter 3:15

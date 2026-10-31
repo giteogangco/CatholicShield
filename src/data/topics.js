@@ -8,6 +8,10 @@ export const CATEGORIES = [
   { id: 'salvation',  icon: '🙏', label: 'Salvation & Faith' },
   { id: 'tradition',  icon: '📜', label: 'Sacred Tradition' },
   { id: 'other',      icon: '❓', label: 'Other Attacks' },
+  { id: 'god',        icon: '☀️', label: 'God, Jesus & Trinity' },
+  { id: 'morality',   icon: '❤️', label: 'Morality & Life' },
+  { id: 'history',    icon: '🏛️', label: 'Church History' },
+  { id: 'practices',  icon: '📿', label: 'Devotions & Practices' },
   ]
 
 // Per-language category labels
@@ -235,12 +239,20 @@ const QUICK_TOPICS_I18N = {
 // Fallback for languages without full translation: use English
 const _fallbackTopics = QUICK_TOPICS_I18N.en
 
+// Labels for the categories added after the first eight (god, morality, history, practices).
+const EXTRA_CATEGORY_LABELS = {
+    fil: ['Diyos, Hesus at Trinidad', 'Moralidad at Buhay', 'Kasaysayan ng Simbahan', 'Debosyon at Gawi'],
+    ceb: ['Dios, Hesus ug Trinidad', 'Moralidad ug Kinabuhi', 'Kasaysayan sa Simbahan', 'Debosyon ug Batasan'],
+    es:  ['Dios, Jesús y Trinidad', 'Moral y Vida', 'Historia de la Iglesia', 'Devociones y Prácticas'],
+}
+
 /**
    * Get localised categories (with translated labels) for a given lang code.
    */
 export function getCategories(langCode) {
-    const labels = CATEGORY_LABELS[langCode] || CATEGORY_LABELS.en
-    return CATEGORIES.map((cat, i) => ({ ...cat, label: labels[i] }))
+    const labels = [...(CATEGORY_LABELS[langCode] || CATEGORY_LABELS.en)]
+    ;(EXTRA_CATEGORY_LABELS[langCode] || []).forEach((l, i) => { labels[8 + i] = l })
+    return CATEGORIES.map((cat, i) => ({ ...cat, label: labels[i] || cat.label }))
 }
 
 /**

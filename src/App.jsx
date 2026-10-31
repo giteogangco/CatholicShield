@@ -3,13 +3,15 @@ import { useChat } from './hooks/useChat'
 import LanguageScreen from './components/LanguageScreen'
 import HomeScreen from './components/HomeScreen'
 import ChatScreen from './components/ChatScreen'
+import LibraryScreen from './components/LibraryScreen'
 import './App.css'
 
 export default function App() {
-  const [screen, setScreen] = useState('lang')   // 'lang' | 'home' | 'chat'
+  const [screen, setScreen] = useState('lang')   // 'lang' | 'home' | 'library' | 'chat'
   const [lang,   setLang]   = useState(null)
+  const [libraryCat, setLibraryCat] = useState('all')
 
-  const { messages, loading, sendMessage, clearMessages } = useChat(lang)
+  const { messages, loading, sendMessage, openEntry, clearMessages, aiAvailable } = useChat(lang)
 
   /* ── Handlers ────────────────────────────────────────── */
 
@@ -19,33 +21,21 @@ export default function App() {
     setScreen('home')
   }
 
-  const handleStartCategory = (cat) => {
-    clearMessages()
-    setScreen('chat')
-    sendMessage(
-      `I need help defending the Catholic faith on the topic of: ${cat.label}. ` +
-      `What are the most common attacks I might face, and how do I respond?`
-    )
+  const handleBrowse = (catId) => {
+    setLibraryCat(catId)
+    setScreen('library')
   }
 
-  const handleStartTopic = (topic) => {
+  const handleOpenFromLibrary = (id) => {
     clearMessages()
     setScreen('chat')
-    sendMessage(`Someone told me: "${topic}" — how do I respond as a Catholic?`)
+    openEntry(id)
   }
 
-  const handleAskOwn = (text) => {
+  const handleAsk = (text) => {
     clearMessages()
     setScreen('chat')
     sendMessage(text)
-  }
-
-  const handleChatSend = (text) => {
-    if (text === (lang && 'Start fresh')) {
-      clearMessages()
-    } else {
-      sendMessage(text)
-    }
   }
 
   /* ── Render ──────────────────────────────────────────── */
@@ -60,9 +50,20 @@ export default function App() {
         <HomeScreen
           lang={lang}
           onSelectLang={() => setScreen('lang')}
-          onStartCategory={handleStartCategory}
-          onStartTopic={handleStartTopic}
-          onAskOwn={handleAskOwn}
+          onBrowse={handleBrowse}
+          onStartTopic={handleAsk}
+          onAskOwn={handleAsk}
+        />
+      )}
+
+      {screen === 'library' && lang && (
+        <LibraryScreen
+          key={libraryCat}
+          lang={lang}
+          initialCat={libraryCat}
+          onOpen={handleOpenFromLibrary}
+          onHome={() => setScreen('home')}
+          onSelectLang={() => setScreen('lang')}
         />
       )}
 
@@ -71,7 +72,13 @@ export default function App() {
           lang={lang}
           messages={messages}
           loading={loading}
-          onSend={handleChatSend}
+          aiAvailable={aiAvailable}
+          onSend={sendMessage}
+          onAskAI={(text) => sendMessage(text, { forceAI: true })}
+          onReadVerse={sendMessage}
+          onOpenEntry={openEntry}
+          onClear={clearMessages}
+          onLibrary={() => handleBrowse('all')}
           onHome={() => setScreen('home')}
           onSelectLang={() => setScreen('lang')}
         />

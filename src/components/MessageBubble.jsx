@@ -1,19 +1,10 @@
-// Formats and renders a single chat message bubble
+// Renders a single chat message: user text, library answer card, AI answer, or plain text.
+import AnswerCard from './AnswerCard'
+import { formatAIResponse } from './formatText'
+import { getEntry } from '../data/knowledgeBase'
 
-function formatAIResponse(text) {
-  let r = text
-  // Wrap lines starting with emoji markers in styled divs
-  r = r.replace(/(⚡[^\n]+)/g,  '<div class="sec sch">$1</div>')
-  r = r.replace(/(✅[^\n]+(?:\n(?![⚡✅📖📜💬]).+)*)/g, '<div class="sec san">$1</div>')
-  r = r.replace(/(📖[^\n]+(?:\n(?![⚡✅📖📜💬]).+)*)/g, '<div class="sec ssc">$1</div>')
-  r = r.replace(/(📜[^\n]+(?:\n(?![⚡✅📖📜💬]).+)*)/g, '<div class="sec str">$1</div>')
-  r = r.replace(/(💬[^\n]+(?:\n(?![⚡✅📖📜💬]).+)*)/g, '<div class="sec sre">$1</div>')
-  r = r.replace(/\n/g, '<br/>')
-  return r
-}
-
-export default function MessageBubble({ message }) {
-  const { role, content } = message
+export default function MessageBubble({ message, ui, langCode, aiAvailable, onReadVerse, onOpenEntry, onAskAI }) {
+  const { role, kind, content } = message
 
   if (role === 'user') {
     return (
@@ -23,12 +14,41 @@ export default function MessageBubble({ message }) {
     )
   }
 
+  if (kind === 'kb') {
+    return (
+      <div className="msg-bubble assistant">
+        <AnswerCard
+          message={message}
+          ui={ui}
+          langCode={langCode}
+          aiAvailable={aiAvailable}
+          onReadVerse={onReadVerse}
+          onOpenEntry={onOpenEntry}
+          onAskAI={onAskAI}
+        />
+      </div>
+    )
+  }
+
+  const links = kind === 'ai' ? message.related : message.suggestions
+
   return (
     <div className="msg-bubble assistant">
-      <div
-        className="ai-bubble"
-        dangerouslySetInnerHTML={{ __html: formatAIResponse(content) }}
-      />
+      <div className="ai-bubble">
+        {kind === 'ai' && <p className="ai-note">🤖 {ui.aiNote}</p>}
+        <div dangerouslySetInnerHTML={{ __html: formatAIResponse(content) }} />
+        {links?.length > 0 && (
+          <div className="related">
+            <p className="related-title">{ui.related}</p>
+            {links.map(id => {
+              const e = getEntry(id)
+              return e && (
+                <button key={id} className="related-btn" onClick={() => onOpenEntry(id)}>{e.q}</button>
+              )
+            })}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

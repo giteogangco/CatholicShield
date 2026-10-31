@@ -821,6 +821,8 @@ const KB = [
 ];
 
 // ── BIBLE VERSE SEARCH ──────────────────────────────────────────────────────
+export const LEGACY_KB = KB
+
 const BIBLE_BOOK_MAP = {
   // Cebuano / Filipino / Spanish → English (for bible-api.com)
   'juan':'john','jn':'john','mateo':'matthew','mat':'matthew','mt':'matthew',
@@ -873,6 +875,17 @@ const BIBLE_BOOK_MAP = {
   'hebrews':'hebrews','galatians':'galatians','ephesians':'ephesians',
   'philippians':'philippians','colossians':'colossians',
   'wisdom':'wisdom','judith':'judith','tobit':'tobit','baruch':'baruch','sirach':'sirach',
+  'ezra':'ezra','nehemiah':'nehemiah','esther':'esther','job':'job',
+  'ecclesiastes':'ecclesiastes','song of songs':'song+of+solomon','lamentations':'lamentations',
+  'hosea':'hosea','jonah':'jonah','micah':'micah','malachi':'malachi',
+  'zechariah':'zechariah','titus':'titus','philemon':'philemon',
+  '1 corinthians':'1+corinthians','2 corinthians':'2+corinthians',
+  '1 thessalonians':'1+thessalonians','2 thessalonians':'2+thessalonians',
+  '1 timothy':'1+timothy','2 timothy':'2+timothy','1 peter':'1+peter','2 peter':'2+peter',
+  '1 john':'1+john','2 john':'2+john','3 john':'3+john',
+  '1 kings':'1+kings','2 kings':'2+kings',
+  '1 chronicles':'1+chronicles','2 chronicles':'2+chronicles',
+  '1 maccabees':'1+maccabees','2 maccabees':'2+maccabees',
 }
 
 /**
