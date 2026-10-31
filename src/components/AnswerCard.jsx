@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { getEntry, localizedAnswer, entryToText, bibleUrl, cccUrl } from '../data/knowledgeBase'
+import { getEntry, localizedAnswer, hasTranslation, translateEntry, localizeRef, entryToText, bibleUrl, cccUrl } from '../data/knowledgeBase'
 import { formatAIResponse } from './formatText'
 
 // "Acts 16:15, 33" → "Acts 16:15" so the in-app verse lookup can read it.
@@ -15,13 +15,19 @@ function Section({ cls, icon, title, children }) {
 }
 
 export default function AnswerCard({ message, ui, langCode, aiAvailable, onReadVerse, onOpenEntry, onAskAI }) {
-  const entry = getEntry(message.entryId)
+  const base = getEntry(message.entryId)
   const [copied, setCopied] = useState(false)
-  const localized = localizedAnswer(entry, langCode)
+  const [showEnglish, setShowEnglish] = useState(false)
+  // A full translation replaces the whole card; otherwise a shorter translated answer
+  // (older entries) is shown above the English card.
+  const translated = hasTranslation(base, langCode)
+  const localized = translated ? null : localizedAnswer(base, langCode)
   const [showFull, setShowFull] = useState(!localized)
-  if (!entry) return null
+  if (!base) return null
 
-  const text = entryToText(entry)
+  const shownLang = translated && !showEnglish ? langCode : 'en'
+  const entry = translateEntry(base, shownLang)
+  const text = entryToText(base, shownLang)
 
   const copy = async () => {
     try {
@@ -37,6 +43,12 @@ export default function AnswerCard({ message, ui, langCode, aiAvailable, onReadV
 
   return (
     <div className="ai-bubble answer-card">
+      {translated && (
+        <button className="toggle-full" onClick={() => setShowEnglish(s => !s)}>
+          {showEnglish ? ui.showLocal : ui.showEnglish}
+        </button>
+      )}
+
       {localized && (
         <div dangerouslySetInnerHTML={{ __html: formatAIResponse(localized) }} />
       )}
@@ -63,8 +75,8 @@ export default function AnswerCard({ message, ui, langCode, aiAvailable, onReadV
               <ul className="ref-list">
                 {entry.bible.map(([ref, note]) => (
                   <li key={ref}>
-                    <button className="ref-btn" onClick={() => onReadVerse(lookupRef(ref))}>{ref}</button>
-                    <a className="ext" href={bibleUrl(lookupRef(ref))} target="_blank" rel="noreferrer" aria-label={`Open ${ref} on Bible Gateway`}>↗</a>
+                    <button className="ref-btn" onClick={() => onReadVerse(lookupRef(ref))}>{localizeRef(ref, shownLang)}</button>
+                    <a className="ext" href={bibleUrl(lookupRef(ref), shownLang)} target="_blank" rel="noreferrer" aria-label={`Open ${ref} on Bible Gateway`}>↗</a>
                     <span className="ref-note"> — {note}</span>
                   </li>
                 ))}
@@ -122,7 +134,7 @@ export default function AnswerCard({ message, ui, langCode, aiAvailable, onReadV
           <button className="quick-chip small" onClick={share}>{ui.share}</button>
         )}
         {aiAvailable !== false && (
-          <button className="quick-chip small" onClick={() => onAskAI(entry.q)}>{ui.askAI}</button>
+          <button className="quick-chip small" onClick={() => onAskAI(base.q)}>{ui.askAI}</button>
         )}
       </div>
 
@@ -132,7 +144,7 @@ export default function AnswerCard({ message, ui, langCode, aiAvailable, onReadV
           {message.related.map(id => {
             const r = getEntry(id)
             return r && (
-              <button key={id} className="related-btn" onClick={() => onOpenEntry(id)}>{r.q}</button>
+              <button key={id} className="related-btn" onClick={() => onOpenEntry(id)}>{translateEntry(r, langCode).q}</button>
             )
           })}
         </div>

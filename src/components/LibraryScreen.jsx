@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { getCategories } from '../data/topics'
 import { getUI } from '../data/uiStrings'
-import { ENTRIES, searchKB } from '../data/knowledgeBase'
+import { ENTRIES, searchKB, translateEntry } from '../data/knowledgeBase'
 import LangPill from './LangPill'
 
 // Browse every library answer by category, or search them.
@@ -52,7 +52,7 @@ export default function LibraryScreen({ lang, initialCat, onOpen, onHome, onSele
         {list.map(e => (
           <button key={e.id} className="lib-item" onClick={() => onOpen(e.id)}>
             <span className="lib-icon">{iconFor[e.cat] || '✝'}</span>
-            <span className="lib-q">{e.q}</span>
+            <span className="lib-q">{translateEntry(e, lang.code).q}</span>
             <span className="lib-meta">
               {e.bible.length} 📖 · {e.ccc.length} 📘{e.fathers.length ? ` · ${e.fathers.length} 📜` : ''}
             </span>

@@ -15,8 +15,21 @@ import salvation from './kb/salvation'
 import god from './kb/god'
 import morality from './kb/morality'
 import history from './kb/history'
+import cebScripture from './kb/ceb/scripture'
+import cebMary from './kb/ceb/mary'
+import cebChurch from './kb/ceb/church'
+import cebSacraments from './kb/ceb/sacraments'
+import cebSalvation from './kb/ceb/salvation'
+import cebGod from './kb/ceb/god'
+import cebMorality from './kb/ceb/morality'
+import cebHistory from './kb/ceb/history'
 
 const legacyByKey = new Map(LEGACY_KB.map(e => [e.keywords[0], e]))
+
+/** Full translations of entries, by language code then entry id (shape: see kb/ceb/scripture.js). */
+const TRANSLATIONS = {
+  ceb: { ...cebScripture, ...cebMary, ...cebChurch, ...cebSacraments, ...cebSalvation, ...cebGod, ...cebMorality, ...cebHistory },
+}
 
 export const ENTRIES = [...scripture, ...mary, ...church, ...sacraments, ...salvation, ...god, ...morality, ...history]
   .map(e => {
@@ -33,6 +46,52 @@ export const entriesInCategory = (cat) => ENTRIES.filter(e => e.cat === cat)
 /** Translated answer text for a language, if the legacy KB has one (never falls back to English). */
 export const localizedAnswer = (entry, langCode) =>
   langCode !== 'en' && entry?.localized?.[langCode] ? entry.localized[langCode] : null
+
+export const hasTranslation = (entry, langCode) => !!TRANSLATIONS[langCode]?.[entry?.id]
+
+/**
+ * The entry with all its text (answer, notes, quotes, document details) in `langCode`
+ * when a full translation exists; otherwise the English entry unchanged.
+ * References, names and URLs always stay as in the English entry.
+ */
+export function translateEntry(entry, langCode) {
+  const t = TRANSLATIONS[langCode]?.[entry?.id]
+  if (!t) return entry
+  return {
+    ...entry,
+    q: t.q,
+    a: t.a,
+    say: t.s,
+    bible: entry.bible.map(([ref, note], i) => [ref, t.b?.[i] ?? note]),
+    fathers: entry.fathers.map(([who, src, text], i) => [who, src, t.f?.[i] ?? text]),
+    docs: entry.docs.map(([title, detail, url], i) => [title, t.d?.[i] ?? detail, url]),
+  }
+}
+
+// Bible book names for display ("John 6:53" → "Juan 6:53"). Lookups always use the English name.
+const BOOK_NAMES = {
+  ceb: {
+    'Genesis': 'Genesis', 'Exodus': 'Exodo', 'Numbers': 'Numeros', 'Deuteronomy': 'Deuteronomio',
+    '1 Samuel': '1 Samuel', '2 Samuel': '2 Samuel', '1 Kings': '1 Mga Hari', '2 Kings': '2 Mga Hari',
+    '1 Chronicles': '1 Cronicas', 'Psalms': 'Mga Salmo', 'Psalm': 'Salmo', 'Proverbs': 'Mga Proverbio',
+    'Isaiah': 'Isaias', 'Jeremiah': 'Jeremias', 'Ezekiel': 'Ezequiel', 'Jonah': 'Jonas', 'Malachi': 'Malaquias',
+    'Wisdom': 'Kaalam', 'Sirach': 'Sirac', '2 Maccabees': '2 Macabeo',
+    'Matthew': 'Mateo', 'Mark': 'Marcos', 'Luke': 'Lucas', 'John': 'Juan', 'Acts': 'Mga Buhat',
+    'Romans': 'Mga Taga-Roma', '1 Corinthians': '1 Mga Taga-Corinto', '2 Corinthians': '2 Mga Taga-Corinto',
+    'Galatians': 'Mga Taga-Galacia', 'Ephesians': 'Mga Taga-Efeso', 'Philippians': 'Mga Taga-Filipos',
+    'Colossians': 'Mga Taga-Colosas', '1 Thessalonians': '1 Mga Taga-Tesalonica', '2 Thessalonians': '2 Mga Taga-Tesalonica',
+    '1 Timothy': '1 Timoteo', '2 Timothy': '2 Timoteo', 'Titus': 'Tito', 'Hebrews': 'Mga Hebreohanon',
+    'James': 'Santiago', '1 Peter': '1 Pedro', '2 Peter': '2 Pedro', '1 John': '1 Juan', 'Jude': 'Judas',
+    'Revelation': 'Pinadayag',
+  },
+}
+const BOOK_RE = Object.fromEntries(Object.entries(BOOK_NAMES).map(([lang, map]) => [
+  lang,
+  new RegExp(`\\b(${Object.keys(map).sort((a, b) => b.length - a.length).join('|')})\\b`, 'g'),
+]))
+
+export const localizeRef = (ref, langCode) =>
+  BOOK_RE[langCode] ? ref.replace(BOOK_RE[langCode], (m) => BOOK_NAMES[langCode][m]) : ref
 
 // ── Search ──────────────────────────────────────────────────────────────────
 
@@ -68,7 +127,11 @@ const tokens = (s) => normalize(s).split(' ').filter(w => w.length > 1 && !STOP.
 const INDEX = ENTRIES.map(e => ({
   entry: e,
   phrases: e.kw.map(normalize).filter(p => p.length >= 2),
-  toks: new Set([...e.kw.flatMap(tokens), ...tokens(e.q), ...tokens(e.id.replace(/-/g, ' '))]),
+  toks: new Set([
+    ...e.kw.flatMap(tokens), ...tokens(e.q), ...tokens(e.id.replace(/-/g, ' ')),
+    // Translated challenges, so questions asked in those languages find the entry too.
+    ...Object.values(TRANSLATIONS).flatMap(t => (t[e.id] ? tokens(t[e.id].q) : [])),
+  ]),
 }))
 
 const DF = new Map()
@@ -117,8 +180,15 @@ export function relatedFor(entry, searchResults = [], max = 4) {
 
 // ── Links & plain-text export ───────────────────────────────────────────────
 
-export const bibleUrl = (ref) =>
-  `https://www.biblegateway.com/passage/?search=${encodeURIComponent(ref)}&version=RSVCE`
+// Bible Gateway versions per language. The Cebuano "Ang Pulong sa Dios" has no deuterocanonical
+// books, so those fall back to the RSV Catholic Edition.
+const BIBLE_VERSIONS = { ceb: 'APSD-CEB' }
+const DEUTEROCANON = /\b(Tobit|Judith|Wisdom|Sirach|Baruch|Maccabees)\b/
+
+export const bibleUrl = (ref, langCode = 'en') => {
+  const version = (!DEUTEROCANON.test(ref) && BIBLE_VERSIONS[langCode]) || 'RSVCE'
+  return `https://www.biblegateway.com/passage/?search=${encodeURIComponent(ref)}&version=${version}`
+}
 
 export const cccUrl = (n) => `https://www.catholicculture.org/culture/library/catechism/index.cfm?recnum=${n}`
 
@@ -134,13 +204,24 @@ export function formatCcc(nums) {
   return out.join(', ')
 }
 
-/** Plain-text version of an answer — used for Copy/Share and as AI context. */
-export function entryToText(e) {
-  const parts = [`⚡ Challenge: ${e.q}`, `✅ Answer: ${e.a}`]
-  if (e.bible.length) parts.push('📖 Scripture:\n' + e.bible.map(([r, n]) => `• ${r} — ${n}`).join('\n'))
-  if (e.ccc.length) parts.push(`📘 Catechism: CCC ${formatCcc(e.ccc)}`)
-  if (e.fathers.length) parts.push('📜 Early Church:\n' + e.fathers.map(([w, s, t]) => `• ${w}, ${s}: ${t}`).join('\n'))
-  if (e.docs.length) parts.push('⛪ Church documents:\n' + e.docs.map(([t, d]) => `• ${t}: ${d}`).join('\n'))
-  parts.push(`💬 Respond: ${e.say}`)
+const TEXT_LABELS = {
+  en:  ['Challenge', 'Answer', 'Scripture', 'Catechism', 'Early Church', 'Church documents', 'Respond'],
+  ceb: ['Hagit', 'Tubag', 'Kasulatan', 'Katekismo', 'Unang Simbahan', 'Mga dokumento sa Simbahan', 'Unsaon pagtubag'],
+}
+
+/**
+ * Plain-text version of an answer — used for Copy/Share and as AI context.
+ * With a langCode that has a translation, the text and labels are in that language.
+ */
+export function entryToText(entry, langCode = 'en') {
+  const lang = hasTranslation(entry, langCode) ? langCode : 'en'
+  const e = translateEntry(entry, lang)
+  const [ch, an, sc, cat, fa, dc, re] = TEXT_LABELS[lang] || TEXT_LABELS.en
+  const parts = [`⚡ ${ch}: ${e.q}`, `✅ ${an}: ${e.a}`]
+  if (e.bible.length) parts.push(`📖 ${sc}:\n` + e.bible.map(([r, n]) => `• ${localizeRef(r, lang)} — ${n}`).join('\n'))
+  if (e.ccc.length) parts.push(`📘 ${cat}: CCC ${formatCcc(e.ccc)}`)
+  if (e.fathers.length) parts.push(`📜 ${fa}:\n` + e.fathers.map(([w, s, t]) => `• ${w}, ${s}: ${t}`).join('\n'))
+  if (e.docs.length) parts.push(`⛪ ${dc}:\n` + e.docs.map(([t, d]) => `• ${t}: ${d}`).join('\n'))
+  parts.push(`💬 ${re}: ${e.say}`)
   return parts.join('\n\n')
 }

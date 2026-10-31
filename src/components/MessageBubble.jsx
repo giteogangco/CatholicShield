@@ -1,7 +1,7 @@
 // Renders a single chat message: user text, library answer card, AI answer, or plain text.
 import AnswerCard from './AnswerCard'
 import { formatAIResponse } from './formatText'
-import { getEntry } from '../data/knowledgeBase'
+import { getEntry, translateEntry } from '../data/knowledgeBase'
 
 export default function MessageBubble({ message, ui, langCode, aiAvailable, onReadVerse, onOpenEntry, onAskAI }) {
   const { role, kind, content } = message
@@ -43,7 +43,7 @@ export default function MessageBubble({ message, ui, langCode, aiAvailable, onRe
             {links.map(id => {
               const e = getEntry(id)
               return e && (
-                <button key={id} className="related-btn" onClick={() => onOpenEntry(id)}>{e.q}</button>
+                <button key={id} className="related-btn" onClick={() => onOpenEntry(id)}>{translateEntry(e, langCode).q}</button>
               )
             })}
           </div>

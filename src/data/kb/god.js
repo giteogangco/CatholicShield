@@ -35,7 +35,7 @@ The Councils of Nicaea (325) and Constantinople (381) did not invent this faith.
     id: 'jesus-is-god',
     cat: 'god',
     q: 'Jesus never claimed to be God. He was only a man, or a prophet, or a created being.',
-    kw: ['jesus is god', 'is jesus god', 'jesus really god', 'is jesus really god', 'jesus god', 'jesus not god', 'jesus never said he is god', 'jesus is only a man', 'jesus only human', 'divinity of christ', 'jesus created', 'before abraham was i am', 'si hesus dios', 'si hesus tao lang', 'diyos si hesus'],
+    kw: ['jesus is god', 'is jesus god', 'hesus dili dios', 'dios ba si hesus', 'hesus dios ba', 'hindi diyos si hesus', 'jesus really god', 'is jesus really god', 'jesus god', 'jesus not god', 'jesus never said he is god', 'jesus is only a man', 'jesus only human', 'divinity of christ', 'jesus created', 'before abraham was i am', 'si hesus dios', 'si hesus tao lang', 'diyos si hesus'],
     a: `Jesus claimed divine names, divine powers and divine honor:
 • "Before Abraham was, I AM." He took God's own name from the burning bush (Exodus 3:14), and his listeners picked up stones to stone him for blasphemy.
 • "I and the Father are one." Again, they tried to stone him, "because you, being a man, make yourself God."

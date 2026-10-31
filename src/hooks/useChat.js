@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { detectBibleVerse, fetchBibleVerse } from '../data/offlineAnswers'
-import { searchKB, relatedFor, getEntry, entryToText, ENTRIES } from '../data/knowledgeBase'
+import { searchKB, relatedFor, getEntry, translateEntry, entryToText, ENTRIES } from '../data/knowledgeBase'
 
 /**
  * Message shapes:
@@ -105,7 +105,7 @@ export function useChat(lang) {
     const entry = getEntry(id)
     if (!entry) return
     push(
-      { role: 'user', content: entry.q },
+      { role: 'user', content: translateEntry(entry, lang.code).q },
       { role: 'assistant', kind: 'kb', entryId: id, related: relatedFor(entry) },
     )
   }
