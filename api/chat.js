@@ -86,8 +86,11 @@ async function askClaude({ system, turns, prompt }) {
     } else if (err instanceof Anthropic.AuthenticationError || err instanceof Anthropic.PermissionDeniedError) {
       return { ok: false, status: 403, error: 'AI key error. Check ANTHROPIC_API_KEY in your Vercel settings.' }
     } else if (err instanceof Anthropic.BadRequestError) {
+      // Usually an account/config problem (e.g. low credit balance), so pass the reason through.
       console.error('Claude bad request:', err.message)
-      return { ok: false, status: 400, error: 'The AI could not process that question. Please rephrase it.' }
+      return { ok: false, status: 400, error: `Claude rejected the request: ${err.error?.error?.message || err.message}` }
+    } else if (err instanceof Anthropic.NotFoundError) {
+      return { ok: false, status: 404, error: `Claude model "${CLAUDE_MODEL}" was not found. Check CLAUDE_MODEL in your Vercel settings.` }
     } else if (err instanceof Anthropic.APIError) {
       console.error(`Claude API error ${err.status}:`, err.message)
       return { ok: false, status: 502, error: 'The AI service had a problem. Please try again.' }
@@ -127,7 +130,7 @@ async function askGemini({ system, turns, prompt }) {
     const status = upstream.status
     const error =
       status === 429 ? 'The AI is busy right now. Please wait a moment and try again.'
-      : status === 400 ? 'The AI could not process that question. Please rephrase it.'
+      : status === 400 ? `Gemini rejected the request: ${data?.error?.message || 'unknown reason'}`
       : status === 403 ? 'AI key error. Check GEMINI_API_KEY in your Vercel settings.'
       : 'The AI service had a problem. Please try again.'
     return { ok: false, status: status || 502, error }
