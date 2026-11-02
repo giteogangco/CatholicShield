@@ -23,12 +23,21 @@ import cebSalvation from './kb/ceb/salvation'
 import cebGod from './kb/ceb/god'
 import cebMorality from './kb/ceb/morality'
 import cebHistory from './kb/ceb/history'
+import filScripture from './kb/fil/scripture'
+import filMary from './kb/fil/mary'
+import filChurch from './kb/fil/church'
+import filSacraments from './kb/fil/sacraments'
+import filSalvation from './kb/fil/salvation'
+import filGod from './kb/fil/god'
+import filMorality from './kb/fil/morality'
+import filHistory from './kb/fil/history'
 
 const legacyByKey = new Map(LEGACY_KB.map(e => [e.keywords[0], e]))
 
 /** Full translations of entries, by language code then entry id (shape: see kb/ceb/scripture.js). */
 const TRANSLATIONS = {
   ceb: { ...cebScripture, ...cebMary, ...cebChurch, ...cebSacraments, ...cebSalvation, ...cebGod, ...cebMorality, ...cebHistory },
+  fil: { ...filScripture, ...filMary, ...filChurch, ...filSacraments, ...filSalvation, ...filGod, ...filMorality, ...filHistory },
 }
 
 export const ENTRIES = [...scripture, ...mary, ...church, ...sacraments, ...salvation, ...god, ...morality, ...history]
@@ -48,6 +57,21 @@ export const localizedAnswer = (entry, langCode) =>
   langCode !== 'en' && entry?.localized?.[langCode] ? entry.localized[langCode] : null
 
 export const hasTranslation = (entry, langCode) => !!TRANSLATIONS[langCode]?.[entry?.id]
+
+/** Languages whose translations are written into the app (others are translated by AI on demand). */
+export const BUILT_IN_LANGS = new Set(['en', ...Object.keys(TRANSLATIONS)])
+
+/**
+ * Add a translation produced at runtime (see aiTranslations.js). Ignored if its lists
+ * don't line up with the English entry, so a bad response can never scramble references.
+ */
+export function registerTranslation(langCode, id, t) {
+  const e = ENTRY_BY_ID[id]
+  if (!e || BUILT_IN_LANGS.has(langCode) || !t || typeof t.q !== 'string' || typeof t.a !== 'string') return false
+  if (t.b?.length !== e.bible.length || t.f?.length !== e.fathers.length || t.d?.length !== e.docs.length) return false
+  ;(TRANSLATIONS[langCode] ||= {})[id] = t
+  return true
+}
 
 /**
  * The entry with all its text (answer, notes, quotes, document details) in `langCode`
@@ -83,6 +107,20 @@ const BOOK_NAMES = {
     '1 Timothy': '1 Timoteo', '2 Timothy': '2 Timoteo', 'Titus': 'Tito', 'Hebrews': 'Mga Hebreohanon',
     'James': 'Santiago', '1 Peter': '1 Pedro', '2 Peter': '2 Pedro', '1 John': '1 Juan', 'Jude': 'Judas',
     'Revelation': 'Pinadayag',
+  },
+  fil: {
+    'Genesis': 'Genesis', 'Exodus': 'Exodo', 'Numbers': 'Mga Bilang', 'Deuteronomy': 'Deuteronomio',
+    '1 Samuel': '1 Samuel', '2 Samuel': '2 Samuel', '1 Kings': '1 Mga Hari', '2 Kings': '2 Mga Hari',
+    '1 Chronicles': '1 Cronica', 'Psalms': 'Mga Awit', 'Psalm': 'Awit', 'Proverbs': 'Kawikaan',
+    'Isaiah': 'Isaias', 'Jeremiah': 'Jeremias', 'Ezekiel': 'Ezekiel', 'Jonah': 'Jonas', 'Malachi': 'Malakias',
+    'Wisdom': 'Karunungan', 'Sirach': 'Sirac', '2 Maccabees': '2 Macabeo',
+    'Matthew': 'Mateo', 'Mark': 'Marcos', 'Luke': 'Lucas', 'John': 'Juan', 'Acts': 'Mga Gawa',
+    'Romans': 'Roma', '1 Corinthians': '1 Corinto', '2 Corinthians': '2 Corinto',
+    'Galatians': 'Galacia', 'Ephesians': 'Efeso', 'Philippians': 'Filipos',
+    'Colossians': 'Colosas', '1 Thessalonians': '1 Tesalonica', '2 Thessalonians': '2 Tesalonica',
+    '1 Timothy': '1 Timoteo', '2 Timothy': '2 Timoteo', 'Titus': 'Tito', 'Hebrews': 'Hebreo',
+    'James': 'Santiago', '1 Peter': '1 Pedro', '2 Peter': '2 Pedro', '1 John': '1 Juan', 'Jude': 'Judas',
+    'Revelation': 'Pahayag',
   },
 }
 const BOOK_RE = Object.fromEntries(Object.entries(BOOK_NAMES).map(([lang, map]) => [
@@ -180,13 +218,17 @@ export function relatedFor(entry, searchResults = [], max = 4) {
 
 // ── Links & plain-text export ───────────────────────────────────────────────
 
-// Bible Gateway versions per language. The Cebuano "Ang Pulong sa Dios" has no deuterocanonical
-// books, so those fall back to the RSV Catholic Edition.
-const BIBLE_VERSIONS = { ceb: 'APSD-CEB' }
+// Bible Gateway versions per language, and whether each includes the deuterocanonical books.
+// The Cebuano "Ang Pulong sa Dios" does not, so those books fall back to the RSV Catholic Edition.
+const BIBLE_VERSIONS = {
+  ceb: { version: 'APSD-CEB', deuterocanon: false },
+  fil: { version: 'MBBTAG-DC', deuterocanon: true },
+}
 const DEUTEROCANON = /\b(Tobit|Judith|Wisdom|Sirach|Baruch|Maccabees)\b/
 
 export const bibleUrl = (ref, langCode = 'en') => {
-  const version = (!DEUTEROCANON.test(ref) && BIBLE_VERSIONS[langCode]) || 'RSVCE'
+  const v = BIBLE_VERSIONS[langCode]
+  const version = v && (v.deuterocanon || !DEUTEROCANON.test(ref)) ? v.version : 'RSVCE'
   return `https://www.biblegateway.com/passage/?search=${encodeURIComponent(ref)}&version=${version}`
 }
 
@@ -207,6 +249,7 @@ export function formatCcc(nums) {
 const TEXT_LABELS = {
   en:  ['Challenge', 'Answer', 'Scripture', 'Catechism', 'Early Church', 'Church documents', 'Respond'],
   ceb: ['Hagit', 'Tubag', 'Kasulatan', 'Katekismo', 'Unang Simbahan', 'Mga dokumento sa Simbahan', 'Unsaon pagtubag'],
+  fil: ['Hamon', 'Sagot', 'Kasulatan', 'Katesismo', 'Sinaunang Simbahan', 'Mga dokumento ng Simbahan', 'Paano tumugon'],
 }
 
 /**

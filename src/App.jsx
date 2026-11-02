@@ -4,6 +4,7 @@ import LanguageScreen from './components/LanguageScreen'
 import HomeScreen from './components/HomeScreen'
 import ChatScreen from './components/ChatScreen'
 import LibraryScreen from './components/LibraryScreen'
+import { loadCachedTranslations } from './data/aiTranslations'
 import './App.css'
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
 
   const handleSelectLang = (selectedLang) => {
     setLang(selectedLang)
+    loadCachedTranslations(selectedLang.code)
     clearMessages()
     setScreen('home')
   }

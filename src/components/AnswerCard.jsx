@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import { getEntry, localizedAnswer, hasTranslation, translateEntry, localizeRef, entryToText, bibleUrl, cccUrl } from '../data/knowledgeBase'
+import { useState, useEffect } from 'react'
+import { getEntry, localizedAnswer, hasTranslation, translateEntry, localizeRef, entryToText, bibleUrl, cccUrl, BUILT_IN_LANGS } from '../data/knowledgeBase'
+import { ensureTranslation, needsAITranslation } from '../data/aiTranslations'
 import { formatAIResponse } from './formatText'
 
 // "Acts 16:15, 33" → "Acts 16:15" so the in-app verse lookup can read it.
@@ -23,8 +24,18 @@ export default function AnswerCard({ message, ui, langCode, aiAvailable, onReadV
   const translated = hasTranslation(base, langCode)
   const localized = translated ? null : localizedAnswer(base, langCode)
   const [showFull, setShowFull] = useState(!localized)
+  // Languages without a built-in translation: fetch an AI translation the first time.
+  const [aiState, setAiState] = useState('idle')   // idle | loading | done | failed
+  useEffect(() => {
+    if (!base || translated || !needsAITranslation(langCode)) return
+    let live = true
+    setAiState('loading')
+    ensureTranslation(langCode, base.id).then(ok => { if (live) setAiState(ok ? 'done' : 'failed') })
+    return () => { live = false }
+  }, [base?.id, langCode, translated])
   if (!base) return null
 
+  const machineTranslated = translated && !BUILT_IN_LANGS.has(langCode)
   const shownLang = translated && !showEnglish ? langCode : 'en'
   const entry = translateEntry(base, shownLang)
   const text = entryToText(base, shownLang)
@@ -43,6 +54,9 @@ export default function AnswerCard({ message, ui, langCode, aiAvailable, onReadV
 
   return (
     <div className="ai-bubble answer-card">
+      {aiState === 'loading' && <p className="ai-note">🌐 {ui.translating}</p>}
+      {machineTranslated && !showEnglish && <p className="ai-note">🤖 {ui.aiTranslated}</p>}
+
       {translated && (
         <button className="toggle-full" onClick={() => setShowEnglish(s => !s)}>
           {showEnglish ? ui.showLocal : ui.showEnglish}
@@ -59,7 +73,7 @@ export default function AnswerCard({ message, ui, langCode, aiAvailable, onReadV
         </button>
       )}
 
-      {showFull && (
+      {(showFull || translated) && (
         <>
           <Section cls="sch" icon="⚡" title={ui.challenge}>
             <p>{entry.q}</p>
